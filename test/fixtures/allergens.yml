@@ -1,0 +1,30 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+egg:
+    id: 1
+    name: 卵
+    
+wheat:
+    id: 2
+    name: 小麦
+
+milk:
+    id: 3
+    name: 乳
+  
+nuts:
+    id: 4
+    name: 落花生
+  
+buckwheats:
+    id: 5
+    name: 蕎麦
+  
+crab:
+    id: 6
+    name: カニ
+  
+shrimp:
+    id: 7
+    name: エビ
+  
