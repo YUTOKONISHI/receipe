@@ -32,7 +32,7 @@
   </div>
 
   <div class="field">
-    <%= collection_check_boxes(:allergen, :allergens_users, Allergen.all, :id, :name) do |al_usr| %>
+    <%= collection_check_boxes(:user, :allergen_ids, Allergen.all, :id, :name) do |al_usr| %>
       <%= al_usr.label { al_usr.check_box + al_usr.text } %>
     <% end %>
   </div>
