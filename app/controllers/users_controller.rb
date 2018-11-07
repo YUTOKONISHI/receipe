@@ -15,6 +15,7 @@ class UsersController < ApplicationController
   # GET /users/new
   def new
     @user = User.new
+    @user.allergens_users.build
   end
 
   # GET /users/1/edit
@@ -69,6 +70,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:email, :first_name, :last_name, :password_digest, :image_path, :registration)
+      params.require(:user).permit(:email, :first_name, :last_name, :password, :image_path, :registration, {:allergens_users => []})
     end
 end

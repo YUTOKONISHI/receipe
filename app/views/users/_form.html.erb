@@ -12,32 +12,38 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :email %>
+    <%= form.label :メールアドレス %>
     <%= form.text_field :email %>
   </div>
 
   <div class="field">
-    <%= form.label :first_name %>
-    <%= form.text_field :first_name %>
-  </div>
-
-  <div class="field">
-    <%= form.label :last_name %>
+    <%= form.label :姓 %>
     <%= form.text_field :last_name %>
   </div>
 
   <div class="field">
-    <%= form.label :password_digest %>
-    <%= form.password_field :password_digest %>
+    <%= form.label :名 %>
+    <%= form.text_field :first_name %>
   </div>
 
   <div class="field">
-    <%= form.label :image_path %>
+    <%= form.label :パスワード %>
+    <%= form.password_field :password %>
+  </div>
+
+  <div class="field">
+    <%= collection_check_boxes(:allergen, :allergens_users, Allergen.all, :id, :name) do |al_usr| %>
+      <%= al_usr.label { al_usr.check_box + al_usr.text } %>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <%= form.label :プロフィール画像 %>
     <%= form.file_field :image_path, id: :user_image_path %>
   </div>
 
   <div class="field">
-    <%= form.label :registration %>
+    <%= form.label :会員登録に同意する場合はチェックを入れてください %>
     <%= form.check_box :registration %>
   </div>
 

@@ -22,7 +22,7 @@
 
 <p>
   <strong>Image path:</strong>
-  <%= @user.image_path %>
+   <td><%= image_tag(@user.image_path_url) rescue nil %></td>
 </p>
 
 <p>

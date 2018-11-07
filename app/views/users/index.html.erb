@@ -5,12 +5,11 @@
 <table>
   <thead>
     <tr>
-      <th>Email</th>
-      <th>First name</th>
-      <th>Last name</th>
+      <th>メールアドレス</th>
+      <th>姓</th>
+      <th>名</th>
       <th>Password digest</th>
-      <th>Image path</th>
-      <th>Registration</th>
+      <th>プロフィール画像</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -19,11 +18,10 @@
     <% @users.each do |user| %>
       <tr>
         <td><%= user.email %></td>
-        <td><%= user.first_name %></td>
         <td><%= user.last_name %></td>
+        <td><%= user.first_name %></td>
         <td><%= user.password_digest %></td>
-        <td><%= user.image_path %></td>
-        <td><%= user.registration %></td>
+        <td><%= image_tag(user.image_path_url) rescue nil %></td>
         <td><%= link_to 'Show', user %></td>
         <td><%= link_to 'Edit', edit_user_path(user) %></td>
         <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
