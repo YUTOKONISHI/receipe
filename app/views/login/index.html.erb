@@ -1,4 +1,7 @@
+ <p style="color: Red"><%= @error %></p>
+
 <%= form_tag action: :auth do %>
+
   <div class="field">
   	<%= label_tag :email, 'メールアドレス:' %>
   	<%= text_field_tag :email, '', size: 20 %>

@@ -1,4 +1,6 @@
-<%= form_with(model: user, local: true) do |form| %>
+<%= form_for @user, url: {action: 'confirm'} do |f| %>
+<%#
+<%= form_with(model: user, local: true) do |f| %>
   <% if user.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
@@ -12,23 +14,23 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :メールアドレス %>
-    <%= form.text_field :email %>
+    <%= f.label :メールアドレス %>
+    <%= f.text_field :email %>
   </div>
 
   <div class="field">
-    <%= form.label :姓 %>
-    <%= form.text_field :last_name %>
+    <%= f.label :姓 %>
+    <%= f.text_field :last_name %>
   </div>
 
   <div class="field">
-    <%= form.label :名 %>
-    <%= form.text_field :first_name %>
+    <%= f.label :名 %>
+    <%= f.text_field :first_name %>
   </div>
 
   <div class="field">
-    <%= form.label :パスワード %>
-    <%= form.password_field :password %>
+    <%= f.label :パスワード %>
+    <%= f.password_field :password %>
   </div>
 
   <div class="field">
@@ -38,16 +40,24 @@
   </div>
 
   <div class="field">
-    <%= form.label :プロフィール画像 %>
-    <%= form.file_field :image_path, id: :user_image_path %>
+    <%= f.label :プロフィール画像 %>
+    <%= f.file_field :image_path, id: :user_image_path %>
   </div>
-
+  
   <div class="field">
-    <%= form.label :会員登録に同意する場合はチェックを入れてください %>
-    <%= form.check_box :registration %>
+    	プロフィール画像: 
+        <%# 一時ディレクトリの場所にある画像を表示 %>
+       <%= image_tag(@user.image_path_url) rescue nil %>
+
   </div>
 
+  <% if @path.is('users#new') %>
+  <div class="field">
+    <%= f.label :会員登録に同意する場合はチェックを入れてください %>
+    <%= f.check_box :registration %>
+  </div>
+  <% end %>
   <div class="actions">
-    <%= form.submit %>
+    <%= f.submit '次へ' %>
   </div>
 <% end %>

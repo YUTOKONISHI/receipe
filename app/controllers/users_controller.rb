@@ -1,5 +1,13 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :request_path
+
+  def request_path
+    @path = controller_path + '#' + action_name
+      def @path.is(*str)
+        str.map{|s| self.include?(s)}.include?(true)
+      end
+  end
 
   # GET /users
   # GET /users.json
@@ -20,15 +28,25 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    @user = User.find(params[:id]) #IDを検索する処理を記載
+  end
+
+  def confirm
+    @user = User.new(user_params) #POSTされたパラメータの取得 
+    render :new if @user.invalid? #バリデーションチェックNGなら戻す
+    @user.image_path.cache! # 一時的アップロード(@userインスタンスには一時ディレクトリのパスが入る)
   end
 
   # POST /users
   # POST /users.json
   def create
     @user = User.new(user_params)
-
+     # パラメータで受け取ったキャッシュから画像を復元する
+    @user.image_path.retrieve_from_cache! params[:cache][:image_path]
     respond_to do |format|
-      if @user.save
+       if params[:back]
+        format.html { render :new }
+      elsif @user.save
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
@@ -41,6 +59,8 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
+
+    @user.image_path.retrieve_from_cache! params[:cache][:image_path]
     respond_to do |format|
       if @user.update(user_params)
         format.html { redirect_to @user, notice: 'User was successfully updated.' }

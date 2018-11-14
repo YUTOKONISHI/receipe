@@ -1,0 +1,6 @@
+ <p style="color: Blue">ようこそ</p>
+ 
+
+<%= form_tag({controller: :login, action: :logout}, { method: :post }) do %>
+    <%= submit_tag 'ログアウト' %>
+<% end %>
