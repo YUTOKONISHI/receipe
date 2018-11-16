@@ -1,4 +1,11 @@
-<%= form_for @user, url: {action: 'confirm'} do |f| %>
+ <% if @path.is('users#edit') %>
+ <% @url = user_path %>
+ <% else %>
+ <% @url = choose_new_or_edit %>
+ <% end %>
+<%= form_for(@user, url: @url) do |f| %>
+<%#= form_for(@user, url: user_path) do |f| %>
+<%#= form_for(@user, url: choose_new_or_edit) do |f| %>
 <%#
 <%= form_with(model: user, local: true) do |f| %>
   <% if user.errors.any? %>
@@ -50,14 +57,13 @@
        <%= image_tag(@user.image_path_url) rescue nil %>
 
   </div>
-
   <% if @path.is('users#new') %>
-  <div class="field">
-    <%= f.label :会員登録に同意する場合はチェックを入れてください %>
-    <%= f.check_box :registration %>
-  </div>
+  	<div class="field">
+    	<%= f.label :会員登録に同意する場合はチェックを入れてください %>
+    	<%= f.check_box :registration %>
+  	</div>
   <% end %>
-  <div class="actions">
-    <%= f.submit '次へ' %>
-  </div>
+  	<div class="actions">
+    	<%= f.submit '次へ'  %>
+  	</div>
 <% end %>

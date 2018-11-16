@@ -1,12 +1,16 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :check_logined, only: :mypage
+  before_action :set_user, only: [:mypage, :show, :edit, :update, :destroy]
   before_action :request_path
-
   def request_path
     @path = controller_path + '#' + action_name
       def @path.is(*str)
         str.map{|s| self.include?(s)}.include?(true)
       end
+  end
+  
+  def mypage
+
   end
 
   # GET /users
@@ -28,13 +32,17 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-    @user = User.find(params[:id]) #IDを検索する処理を記載
+    @user = User.find(params[:id])
+    @user.allergens_users.build
   end
 
   def confirm
     @user = User.new(user_params) #POSTされたパラメータの取得 
-    render :new if @user.invalid? #バリデーションチェックNGなら戻す
+    if @user.invalid? #バリデーションチェックNGなら戻す
+      render action: :new 
+    else
     @user.image_path.cache! # 一時的アップロード(@userインスタンスには一時ディレクトリのパスが入る)
+    end
   end
 
   # POST /users
@@ -59,8 +67,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-
-    @user.image_path.retrieve_from_cache! params[:cache][:image_path]
+    # パラメータで受け取ったキャッシュから画像を復元する
     respond_to do |format|
       if @user.update(user_params)
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
@@ -92,4 +99,21 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:email, :first_name, :last_name, :password, :image_path, :registration, {:allergen_ids =>[]})
     end
+    
+    def check_logined
+      if session[:usr] then
+        begin
+          @user = User.find(session[:usr])
+         
+        rescue ActiveRecord::RecordNotFound
+           reset_session
+        end
+      end
+    
+    unless @user
+      flash[:referer] = request.fullpath
+      redirect_to controller: :login, action: :index
+    end
+  end
+    
 end
