@@ -6,19 +6,20 @@ Rails.application.routes.draw do
   resources :receipe_evaluations, param: :receipe_evaluation_id
   resources :cooking_steps, param: :cooking_step_id
   resources :receipes, param: :receipe_id, except: [:new] do
-    post 'add' => 'bookmarks#create'
-    delete '/add' => 'bookmarks#destroy'
+    
     collection do
       get ':user_id/new', to: 'receipes#new', as: :new
     end
     
     member do
+      post 'add' => 'bookmarks#create'
+    delete '/add' => 'bookmarks#destroy'
      #post 'add' => 'bookmarks#create'
      end
      
   end
   
-  resources :bookmarks, param: :bookmark_id, except: [:new, :edit, :show]
+  resources :bookmarks, param: :bookmark_id, except: [:create, :destroy] #except: [:new, :edit, :show, :update, :create, :destroy]
   resources :allergens_ingredients, param: :allergens_ingredients_id
   resources :ingredients, param: :ingredient_id
   resources :allergens_replaced_ingredients, param: :allergens_replaced_ingredients_id
