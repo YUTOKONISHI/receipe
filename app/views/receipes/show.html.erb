@@ -1,0 +1,86 @@
+<p id="notice"><%= notice %></p>
+
+<% if !Bookmark.exists?(user_id: session[:usr],receipe_id:@receipe.id) %>
+<%= link_to "お気に入り", receipe_add_path(@receipe),method: :post %>
+<% else %>
+<%= link_to "お気に入り解除", receipe_add_path(@receipe),method: :delete %>
+<% end %>
+<p>
+  <strong>Title:</strong>
+  <%= @receipe.title %>
+</p>
+
+<p>
+  <strong>Receipe category:</strong>
+  <%#= @receipe.receipe_category_id %>
+  <%= @receipe_category.name %>
+</p>
+
+<p>
+  <strong>Introduction:</strong>
+  <%= @receipe.introduction %>
+</p>
+
+<p>
+  <table>
+  <thead>
+    <tr>
+    	<strong>
+      <th>材料名</th>
+      <th>分量</th>
+      <th>アレルギー成分</th>
+      <th>代替食品</th>
+      <th>代替食品の分量</th>
+      <th>代替食品のアレルギー成分</th>
+      <th colspan="6"></th>
+       </strong>
+    </tr>
+  </thead>
+  
+  <tbody>
+  	<% @ingredients.each do |ingredient| %>
+  	<tr>
+  		<td><%= ingredient.name %></td>
+  		<td><%= ingredient.quantity %></td>
+
+  		<td>
+  			<% ingredient.allergens.each do |allergen| %>
+  			 <%= allergen.name %>
+  			<% end %>
+       </td>
+       <% if ingredient.replaced_ingredient.present? %>
+       <td>
+          <%= ingredient.replaced_ingredient.name %>
+  		</td>
+  		<td>
+          <%= ingredient.replaced_ingredient.quantity%>
+  		</td>
+  		<td>
+  			<% ingredient.replaced_ingredient.allergens.each do |allergen|  %>
+  			 <%= allergen.name %>
+  			<% end %>
+       </td>
+  		<% end %>
+    </tr>
+  		
+  	<% end %>  	 
+  </tbody>
+</p>
+
+<p>
+  <strong>画像:</strong>
+  <%= image_tag(@receipe.image_path_url, :width => 400, :height => 300) rescue nil %>
+</p>
+
+
+  
+<p>
+  <strong>料理の作成手順</strong><br>
+  <% @cooking_steps.each do |cooking_step| %>
+  <%= cooking_step.number%><%=". " %><%= cooking_step.description %><%=" "%><%= image_tag(cooking_step.image_path_url) rescue nil %><br>
+  <% end %>
+</p>
+
+<%= link_to 'Edit', edit_receipe_path(@receipe) %> |
+<%= link_to 'マイページ', mypage_path %>
+<%= link_to 'ログアウト', controller: :login, action: :logout %>

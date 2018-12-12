@@ -1,0 +1,28 @@
+<h1>退会手続き</h1>
+
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+
+<p>
+  <strong>氏名:</strong>
+  <%= @user.first_name %>  <%= @user.last_name %>
+</p>
+
+<%= image_tag(@user.image_path_url) rescue nil %>
+
+<p>
+  <strong>アレルギー品目</strong>
+	 <%= collection_check_boxes(:user, :allergen_ids, Allergen.all, :id, :name) do |al_usr| %>
+     <%= al_usr.label { al_usr.check_box(disabled: :disabled) + al_usr.text } %>
+    <% end %>
+</p>
+
+<%= link_to '退会する', :user, method: :delete, data: { confirm: 'Are you sure?' } %>
+<%#= form_tag action: :withdrawal do  |f| %>
+  <%#= hidden_field_tag :registration, 'false' %>
+  <%#= submit_tag '退会する' %>
+<%# end %>
+
+<%= link_to 'マイページ', :controller => "users", :action => "mypage" %>

@@ -1,0 +1,37 @@
+<%= form_with(model: cooking_step, local: true) do |form| %>
+  <% if cooking_step.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(cooking_step.errors.count, "error") %> prohibited this cooking_step from being saved:</h2>
+
+      <ul>
+      <% cooking_step.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :receipe_id %>
+    <%= form.text_field :receipe_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :number %>
+    <%= form.number_field :number %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_field :description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :image_path %>
+    <%= form.text_field :image_path %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

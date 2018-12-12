@@ -16,14 +16,33 @@
 
 <p>
   <strong>アレルギー品目</strong>
-	 <%= collection_check_boxes(:user, :allergen_ids, Allergen.all, :id, :name) do |al_usr| %>
-     <%= al_usr.label { al_usr.check_box(disabled: :disabled) + al_usr.text } %>
-    <% end %>
+    <% @user.allergens.each do |allergen| %>
+  	 <%= allergen.name %>
+  	 <% end %>
+  
+	 <%#= collection_check_boxes(:user, :allergen_ids, Allergen.all, :id, :name) do |al_usr| %>
+     <%#= al_usr.label { al_usr.check_box(disabled: :disabled) + al_usr.text } %>
+    <%# end %>
 </p>
 
-<%= link_to '登録情報変更', edit_user_path(@user) %>
+<%= link_to '登録情報変更', 'edit' %>
 
+<h2>投稿レシピ</h2> 
+<ul>
+  <% @receipes.each do |receipe| %>
+    <li>
+      <%= link_to receipe.title, receipe %>
+      <%= image_tag(receipe.image_path_url, :width => 400, :height => 300) rescue nil %>
+    </li>
+  <% end %>
+</ul>
+<%= will_paginate @receipes, :renderer => BootstrapPagination::Rails %>
 
-<%= form_tag({controller: :login, action: :logout}, { method: :post }) do %>
-    <%= submit_tag 'ログアウト' %>
+<h2>お気に入り</h2> 
+<% @user.receipes.each do |user_rsp| %>
 <% end %>
+
+<%= link_to 'レシピを投稿する', new_receipes_path(user_id: session[:usr]) %>
+<%#= link_to 'レシピを投稿する', controller: :receipes, action: :new %>
+<%= link_to 'ログアウト', controller: :login, action: :logout %>
+

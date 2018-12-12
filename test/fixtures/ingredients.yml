@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  receipe: one
+  replaced_ingredient: one
+  name: MyString
+  quantity: MyString
+
+two:
+  receipe: two
+  replaced_ingredient: two
+  name: MyString
+  quantity: MyString

@@ -2,10 +2,18 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.5.0'
-
+gem 'jquery-rails'
+gem 'sprockets'
+gem 'nested_form_fields'
+gem 'paranoia' #論理削除
 gem 'bcrypt'
 gem 'carrierwave'
 gem 'mini_magick'
+gem 'bootstrap-sass'
+gem 'will_paginate'
+gem 'will_paginate-bootstrap'
+gem "font-awesome-rails"
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.1'
 # Use sqlite3 as the database for Active Record

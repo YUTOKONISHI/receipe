@@ -1,0 +1,1 @@
+json.partial! "allergens_replaced_ingredients/allergens_replaced_ingredient", allergens_replaced_ingredient: @allergens_replaced_ingredient

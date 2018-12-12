@@ -1,0 +1,129 @@
+<%= form_with(model: receipe,  local: true) do |f| %>
+  <% if receipe.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(receipe.errors.count, "error") %> prohibited this receipe from being saved:</h2>
+
+      <ul>
+      <% receipe.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.hidden_field :user_id, :value => params[:user_id] %>
+  </div>
+
+  <div class="field">
+    <%= f.label :料理名 %>
+    <%= f.text_field :title %>
+  </div>
+
+  <div class="field">
+    <%= f.label :カテゴリ %>
+    <%= f.collection_select :receipe_category_id, ReceipeCategory.all, :id, :name, :include_blank => true %>
+    
+    <%#= f.hidden_field :receipe_category, :value => :receipe_category_id %>
+    <%#= f.text_field :receipe_category_id %>
+  </div>
+
+  <div class="field">
+    <%= f.label :紹介文 %>
+    <%= f.text_area :introduction, :size => "40x5" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :完成品画像 %>
+    <%= f.file_field :image_path, id: :receipe_image_path %>
+  </div>
+   <div class="field">
+        <%# 一時ディレクトリの場所にある画像を表示 %>
+       <%= image_tag(@receipe.image_path_url) rescue nil %>
+       <%= hidden_field_tag :"cache[image_path]", @receipe.image_path.cache_name %>     
+  </div>
+
+  <div class="field">
+    <%= f.label :材料 %>
+    <table>
+    <tbody>
+     <tr>
+       <th>材料名</th>
+       <th>分量</th>
+       <th>アレルギー成分</th>
+       <th>代替食品設定</th>
+       <th>Action</th>
+     </tr>
+    <%= f.nested_fields_for :ingredients, wrapper_tag: :tr do |q| %>
+     <td><%= q.text_field :name, class: 'form-control' %></td>
+     <td><%= q.text_field :quantity, class: 'form-control' %></td>
+     <td><%= q.collection_check_boxes(:allergen_ids, Allergen.all, :id, :name) do |al_rsp| %>
+      <%= al_rsp.label { al_rsp.check_box + al_rsp.text } %><% end %></td>
+     <td>
+     	<a href="#ingredient" data-toggle="modal">代替食品を設定する</a>
+     	
+     	<div class="modal fade" id="ingredient" tabindex="-1">
+     		<div class="modal-dialog modal-dialog-centered">
+     			<div class="modal-content">
+     				<div class="modal-header">
+     					<h5 class="modal-title">代替食品</h5>
+     					<button class="close" data-dismiss="modal"><span>&times;</span></button>
+     				</div>
+     				<div class="modal-body">
+     					<table>
+     					<tbody>
+     						<tr>
+     							<th>材料名</th>
+     							<th>分量</th>
+     							<th>アレルギー成分</th>
+     						</tr>
+     						<%= q.fields_for :replaced_ingredient do |r| %>
+     						<td><%= r.text_field :name, class: 'form-control' %></td>
+     						<td><%= r.text_field :quantity, class: 'form-control' %></td>
+     						<td><%= r.collection_check_boxes(:allergen_ids, Allergen.all, :id, :name) do |re_al_rsp| %>
+     							<%= re_al_rsp.label { re_al_rsp.check_box + re_al_rsp.text } %>
+                            <% end %>
+                        </td>
+                         <% end %>
+     					</tbody>
+     					</table>
+     				</div>
+     				<div class="modal-footer">
+     			   </div>
+     		   </div>
+     	    </div>
+     	</div>
+     </td>
+     <td><%= q.remove_nested_fields_link '削除する', role: 'button' %></td>
+    <% end %>
+    </tbody>
+    </table>
+    <%= f.add_nested_fields_link :ingredients, '材料を追加する', role: 'button' %>
+  </div>
+
+  <div class="field">
+    <%= f.label :作り方 %>
+    <table>
+    <tbody>
+     <tr>
+       <th>手順</th>
+       <th>説明</th>
+       <th>画像</th>
+       <th>Action</th>
+     </tr>
+    <%= f.nested_fields_for :cooking_steps, wrapper_tag: :tr do |q| %>
+     <td><div class="procedure-num">1</div></td>
+     <%= q.hidden_field :number, class: 'number-num', :value =>"1" %>
+     <td><%= q.text_field :description, class: 'form-control' %></td>
+     <td><%= q.file_field :image_path, id: :cooking_step_image_path, class: 'form-control' %></td>
+     <td><%= q.remove_nested_fields_link '削除する', role: 'button' %></td>
+    <% end %>
+    </tbody>
+    </table>
+    <%= f.add_nested_fields_link :cooking_steps, '手順を追加する', role: 'button' %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit '投稿' %>
+  </div>
+<% end %>

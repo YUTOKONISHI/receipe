@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Receipe Categories</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @receipe_categories.each do |receipe_category| %>
+      <tr>
+        <td><%= receipe_category.name %></td>
+        <td><%= link_to 'Show', receipe_category %></td>
+        <td><%= link_to 'Edit', edit_receipe_category_path(receipe_category) %></td>
+        <td><%= link_to 'Destroy', receipe_category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Receipe Category', new_receipe_category_path %>

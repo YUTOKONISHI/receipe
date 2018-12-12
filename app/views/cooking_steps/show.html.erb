@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Receipe:</strong>
+  <%= @cooking_step.receipe_id %>
+</p>
+
+<p>
+  <strong>Number:</strong>
+  <%= @cooking_step.number %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @cooking_step.description %>
+</p>
+
+<p>
+  <strong>Image path:</strong>
+  <%= @cooking_step.image_path %>
+</p>
+
+<%= link_to 'Edit', edit_cooking_step_path(@cooking_step) %> |
+<%= link_to 'Back', cooking_steps_path %>

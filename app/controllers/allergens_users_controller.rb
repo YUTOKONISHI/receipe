@@ -64,7 +64,7 @@ class AllergensUsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_allergens_user
-      @allergens_user = AllergensUser.find(params[:id])
+      @allergens_user = AllergensUser.find(params[:allergens_users_id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

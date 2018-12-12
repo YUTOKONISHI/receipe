@@ -1,0 +1,27 @@
+<%= form_with(model: allergens_replaced_ingredient, local: true) do |form| %>
+  <% if allergens_replaced_ingredient.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(allergens_replaced_ingredient.errors.count, "error") %> prohibited this allergens_replaced_ingredient from being saved:</h2>
+
+      <ul>
+      <% allergens_replaced_ingredient.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :allergen_id %>
+    <%= form.text_field :allergen_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :replaced_ingredient_id %>
+    <%= form.text_field :replaced_ingredient_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

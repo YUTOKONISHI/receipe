@@ -5,6 +5,7 @@
 <table>
   <thead>
     <tr>
+      <th>ID</th>
       <th>User</th>
       <th>Allergen</th>
       <th colspan="3"></th>
@@ -14,6 +15,7 @@
   <tbody>
     <% @allergens_users.each do |allergens_user| %>
       <tr>
+      	 <td><%= allergens_user.id %></td>
         <td><%= allergens_user.user_id %></td>
         <td><%= allergens_user.allergen_id %></td>
         <td><%= link_to 'Show', allergens_user %></td>

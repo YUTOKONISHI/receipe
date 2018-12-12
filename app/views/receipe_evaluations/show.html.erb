@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @receipe_evaluation.user %>
+</p>
+
+<p>
+  <strong>Receipe:</strong>
+  <%= @receipe_evaluation.receipe %>
+</p>
+
+<p>
+  <strong>Rating:</strong>
+  <%= @receipe_evaluation.rating %>
+</p>
+
+<%= link_to 'Edit', edit_receipe_evaluation_path(@receipe_evaluation) %> |
+<%= link_to 'Back', receipe_evaluations_path %>

@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Allergens Ingredients</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Ingredient</th>
+      <th>Allergen</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @allergens_ingredients.each do |allergens_ingredient| %>
+      <tr>
+        <td><%= allergens_ingredient.ingredient_id %></td>
+        <td><%= allergens_ingredient.allergen_id %></td>
+        <td><%= link_to 'Show', allergens_ingredient %></td>
+        <td><%= link_to 'Edit', edit_allergens_ingredient_path(allergens_ingredient) %></td>
+        <td><%= link_to 'Destroy', allergens_ingredient, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Allergens Ingredient', new_allergens_ingredient_path %>

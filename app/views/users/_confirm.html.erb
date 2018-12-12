@@ -1,0 +1,75 @@
+<%= form_for @user do |f| %>
+	<div class="field">
+		メールアドレス: <%= @user.email %>
+		<%= f.hidden_field :email %>
+	</div>
+	
+	<div class="field">
+		姓: <%= @user.last_name %>
+		<%= f.hidden_field :last_name %>
+	</div>	
+	
+	<div class="field">
+		名: <%= @user.first_name %>
+		<%= f.hidden_field :first_name %>
+	</div>
+
+	<div class="field">
+		パスワード: *****************
+		<%= f.hidden_field :password %>
+	</div>
+	
+	<div class="field">
+       アレルギー品目: 
+       
+      <%= f.collection_check_boxes(:allergen_ids, Allergen.all, :id, :name) do |al_usr| %>
+      <%= al_usr.label { al_usr.check_box(:class => "allergen", disabled: :true) + al_usr.text } %> 
+      <% end %>
+      <% if @path.is('users#confirm_new') %>
+      <% @user.allergens_users.each do |allergen_id| %>
+      <%= f.hidden_field :allergen_ids, multiple: true, value: allergen_id.id %>
+      <% end %>
+      <% end %>
+      <% if @path.is('users#confirm_edit') %>
+      <% @user.allergens_users.each do |allergen_user| %>
+      <%= f.hidden_field :allergen_user_ids, multiple: true, value: allergen_user.id %>
+      <% end %>
+      <% end %>
+
+    </div>
+    
+    <div class="field">
+    	プロフィール画像: 
+        <%# 一時ディレクトリの場所にある画像を表示 %>
+       <%= image_tag(@user.image_path.url) %>
+
+        <%# キャッシュ名(一時ディレクトリの名前)をhiddenで渡す %>
+       <%= hidden_field_tag :"cache[image_path]", @user.image_path.cache_name %>
+    </div>
+
+	<div class="field">
+		会員フラグ: <%= @user.registration %>
+		<%= f.hidden_field :registration %>
+	</div>
+    
+    <div class="actions">
+    	<%= f.submit 'Back!', name: 'back' %>
+    </div>
+
+    <div class="actions">
+    	<%= f.submit 'create!' , id: :btn %>
+    </div>
+	
+	
+<% end %>
+
+<script type="text/javascript">
+ 
+$("#btn").click(function() {
+   ///disabled属性の状態を取得する
+    var result = $('.allergen').prop('disabled');
+   
+   //disabled属性を解除する
+    $('.allergen').prop('disabled', false);
+});
+</script>

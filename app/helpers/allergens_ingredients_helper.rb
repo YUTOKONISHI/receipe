@@ -1,0 +1,2 @@
+module AllergensIngredientsHelper
+end

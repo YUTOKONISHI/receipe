@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  receipe: one
+  number: 1
+  description: MyString
+  image_path: MyString
+
+two:
+  receipe: two
+  number: 1
+  description: MyString
+  image_path: MyString

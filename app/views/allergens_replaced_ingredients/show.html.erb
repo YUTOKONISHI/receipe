@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Allergen:</strong>
+  <%= @allergens_replaced_ingredient.allergen %>
+</p>
+
+<p>
+  <strong>Replaced ingredient:</strong>
+  <%= @allergens_replaced_ingredient.replaced_ingredient %>
+</p>
+
+<%= link_to 'Edit', edit_allergens_replaced_ingredient_path(@allergens_replaced_ingredient) %> |
+<%= link_to 'Back', allergens_replaced_ingredients_path %>

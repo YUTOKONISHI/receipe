@@ -1,13 +1,13 @@
- <% if @path.is('users#edit') %>
- <% @url = user_path %>
- <% else %>
- <% @url = choose_new_or_edit %>
- <% end %>
-<%= form_for(@user, url: @url) do |f| %>
+
+ <%# else %>
+ 
+ <%# @url = choose_new_or_edit %>
+ <%# end %>
 <%#= form_for(@user, url: user_path) do |f| %>
-<%#= form_for(@user, url: choose_new_or_edit) do |f| %>
+<%= form_for(@user, url: choose_new_or_edit) do |f| %>
+ 
 <%#
-<%= form_with(model: user, local: true) do |f| %>
+<%#= form_with(model: user, local: true) do |f| %>
   <% if user.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
@@ -41,7 +41,7 @@
   </div>
 
   <div class="field">
-    <%= collection_check_boxes(:user, :allergen_ids, Allergen.all, :id, :name) do |al_usr| %>
+    <%= f.collection_check_boxes(:allergen_ids, Allergen.all, :id, :name) do |al_usr| %>
       <%= al_usr.label { al_usr.check_box + al_usr.text } %>
     <% end %>
   </div>
@@ -49,13 +49,13 @@
   <div class="field">
     <%= f.label :プロフィール画像 %>
     <%= f.file_field :image_path, id: :user_image_path %>
+  
   </div>
   
   <div class="field">
-    	プロフィール画像: 
         <%# 一時ディレクトリの場所にある画像を表示 %>
        <%= image_tag(@user.image_path_url) rescue nil %>
-
+       <%= hidden_field_tag :"cache[image_path]", @user.image_path.cache_name %>     
   </div>
   <% if @path.is('users#new') %>
   	<div class="field">
@@ -66,4 +66,7 @@
   	<div class="actions">
     	<%= f.submit '次へ'  %>
   	</div>
+<% end %>
+<% if @path.is('users#edit') %>
+<%= link_to '退会手続き', cancel_membership_path %>
 <% end %>
