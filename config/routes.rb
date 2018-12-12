@@ -14,7 +14,6 @@ Rails.application.routes.draw do
     member do
       post 'add' => 'bookmarks#create'
     delete '/add' => 'bookmarks#destroy'
-     #post 'add' => 'bookmarks#create'
      end
      
   end

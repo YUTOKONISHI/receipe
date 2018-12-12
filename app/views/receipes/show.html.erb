@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <% if !Bookmark.exists?(user_id: session[:usr],receipe_id:@receipe.id) %>
-<%= link_to "お気に入り", add_receipe_path(@receipe),method: :post %>
+<%= link_to "お気に入り登録", add_receipe_path(@receipe),method: :post %>
 <% else %>
 <%= link_to "お気に入り解除", add_receipe_path(@receipe),method: :delete %>
 <% end %>
