@@ -27,6 +27,7 @@
 
 <%= link_to '登録情報変更', 'edit' %>
 
+<p>
 <h2>投稿レシピ</h2> 
 <ul>
   <% @receipes.each do |receipe| %>
@@ -36,11 +37,20 @@
     </li>
   <% end %>
 </ul>
-<%= will_paginate @receipes, :renderer => BootstrapPagination::Rails %>
-
+<%= will_paginate @receipes, :param_name => 'myreceipe_page', :renderer => BootstrapPagination::Rails %>
+</p>
+<p>
 <h2>お気に入り</h2> 
-<% @user.receipes.each do |user_rsp| %>
+<ul>
+<% @bookmarks.each do |b_rsp| %>
+   <li>
+   	   <%= link_to b_rsp.receipe.title, b_rsp.receipe %>
+      <%= image_tag(b_rsp.receipe.image_path_url, :width => 400, :height => 300) rescue nil %>
+   	</li>
 <% end %>
+</ul>
+<%= will_paginate @bookmarks,  :param_name => 'bookmark_page', :renderer => BootstrapPagination::Rails %>
+</p>
 
 <%= link_to 'レシピを投稿する', new_receipes_path(user_id: session[:usr]) %>
 <%#= link_to 'レシピを投稿する', controller: :receipes, action: :new %>

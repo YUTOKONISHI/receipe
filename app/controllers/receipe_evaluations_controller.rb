@@ -1,5 +1,5 @@
 class ReceipeEvaluationsController < ApplicationController
-  before_action :set_receipe_evaluation, only: [:show, :edit, :update, :destroy]
+  before_action :set_receipe_evaluation, only: [:show, :edit, :destroy]
 
   # GET /receipe_evaluations
   # GET /receipe_evaluations.json
@@ -18,37 +18,55 @@ class ReceipeEvaluationsController < ApplicationController
   end
 
   # GET /receipe_evaluations/1/edit
-  def edit
-  end
+  #def edit
+  #end
 
   # POST /receipe_evaluations
   # POST /receipe_evaluations.json
   def create
-    @receipe_evaluation = ReceipeEvaluation.new(receipe_evaluation_params)
-
-    respond_to do |format|
-      if @receipe_evaluation.save
-        format.html { redirect_to @receipe_evaluation, notice: 'Receipe evaluation was successfully created.' }
-        format.json { render :show, status: :created, location: @receipe_evaluation }
-      else
-        format.html { render :new }
-        format.json { render json: @receipe_evaluation.errors, status: :unprocessable_entity }
-      end
+    session_user = session[:usr]
+    receipe = Receipe.find(params[:receipe_id])
+    user_rating = params[:rating]
+    
+    if ReceipeEvaluation.create(user_id: session_user, receipe_id: receipe.id, rating: user_rating)
+      redirect_to receipe
+    else
+    
     end
+    #@receipe_evaluation = ReceipeEvaluation.new(receipe_evaluation_params)
+
+    #respond_to do |format|
+    #  if @receipe_evaluation.save
+    #    format.html { redirect_to @receipe_evaluation, notice: 'Receipe evaluation was successfully created.' }
+    #    format.json { render :show, status: :created, location: @receipe_evaluation }
+    #  else
+    #    format.html { render :new }
+    #    format.json { render json: @receipe_evaluation.errors, status: :unprocessable_entity }
+    #  end
+    #end
   end
 
   # PATCH/PUT /receipe_evaluations/1
   # PATCH/PUT /receipe_evaluations/1.json
   def update
-    respond_to do |format|
-      if @receipe_evaluation.update(receipe_evaluation_params)
-        format.html { redirect_to @receipe_evaluation, notice: 'Receipe evaluation was successfully updated.' }
-        format.json { render :show, status: :ok, location: @receipe_evaluation }
-      else
-        format.html { render :edit }
-        format.json { render json: @receipe_evaluation.errors, status: :unprocessable_entity }
-      end
+    session_user = session[:usr]
+    receipe = Receipe.find(params[:receipe_id])
+    user_rating = params[:rating]
+    
+    if ReceipeEvaluation.update(user_id: session_user, receipe_id: receipe.id, rating: user_rating)
+      redirect_to receipe
+    else
+    
     end
+    #respond_to do |format|
+    #  if @receipe_evaluation.update(receipe_evaluation_params)
+    #    format.html { redirect_to @receipe_evaluation, notice: 'Receipe evaluation was successfully updated.' }
+    #    format.json { render :show, status: :ok, location: @receipe_evaluation }
+    #  else
+    #    format.html { render :edit }
+    #    format.json { render json: @receipe_evaluation.errors, status: :unprocessable_entity }
+    #  end
+    #end
   end
 
   # DELETE /receipe_evaluations/1

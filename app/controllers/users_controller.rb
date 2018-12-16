@@ -17,8 +17,11 @@ class UsersController < ApplicationController
   def mypage
     @user_receipes = Receipe.where(user_id: session[:usr])
     #@user_receipes = Receipe.where(user_id: params[:user_id])
-    @receipes = @user_receipes.paginate(page: params[:page], :per_page => 1 )
-    @bookmarks = Bookmark.where("user_id = ?", @user)
+    @receipes = @user_receipes.paginate(page: params[:myreceipe_page], :per_page => 1 )
+    
+    @bookmark_receipes = Bookmark.where(user_id: session[:usr])
+    @bookmarks = @bookmark_receipes.paginate(page: params[:bookmark_page], :per_page => 1 )
+     
   end
 
   # GET /users
@@ -125,7 +128,8 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:page, :email, :first_name, :last_name, :password, :image_path, :registration, {:allergen_ids =>[]}, {:receipe_ids =>[]})
+      params.require(:user).permit(:email, :first_name, :last_name, :password, :image_path, :registration, {:allergen_ids =>[]}, {:receipe_ids =>[]},
+      receipe_evaluations_attributes: [:receipe_evaluation_id, :receipe_id, :user_id, :ratiing, :_destroy])
     end
     
 

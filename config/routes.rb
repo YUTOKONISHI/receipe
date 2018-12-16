@@ -3,7 +3,6 @@ Rails.application.routes.draw do
   get  'users/mypage' ,to: 'users#mypage', as: :mypage
   get  'users/edit', to: 'users#edit'
   
-  resources :receipe_evaluations, param: :receipe_evaluation_id
   resources :cooking_steps, param: :cooking_step_id
   resources :receipes, param: :receipe_id, except: [:new] do
     
@@ -14,10 +13,13 @@ Rails.application.routes.draw do
     member do
       post 'add' => 'bookmarks#create'
     delete '/add' => 'bookmarks#destroy'
+      post 'new_rating/' => 'receipe_evaluations#create'
+    patch 'update_rating/' => 'receipe_evaluations#update'
      end
      
   end
   
+  resources :receipe_evaluations, param: :receipe_evaluation_id, except: [:create, :update]
   resources :bookmarks, param: :bookmark_id, except: [:create, :destroy] #except: [:new, :edit, :show, :update, :create, :destroy]
   resources :allergens_ingredients, param: :allergens_ingredients_id
   resources :ingredients, param: :ingredient_id

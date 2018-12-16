@@ -15,8 +15,8 @@
   <tbody>
     <% @receipe_evaluations.each do |receipe_evaluation| %>
       <tr>
-        <td><%= receipe_evaluation.user %></td>
-        <td><%= receipe_evaluation.receipe %></td>
+        <td><%= receipe_evaluation.user_id %></td>
+        <td><%= receipe_evaluation.receipe_id %></td>
         <td><%= receipe_evaluation.rating %></td>
         <td><%= link_to 'Show', receipe_evaluation %></td>
         <td><%= link_to 'Edit', edit_receipe_evaluation_path(receipe_evaluation) %></td>

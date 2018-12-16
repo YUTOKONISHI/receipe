@@ -1,5 +1,4 @@
 $(function(){
-  console.log('トリガ前');
 	 $(document).on('fields_added.nested_form_fields', function() {
 	   console.log('Call_A');
 	   var classLength = $('.nested_receipe_cooking_steps').length;
@@ -16,7 +15,6 @@ $(function(){
   });
   
   	 $(document).on('fields_removed.nested_form_fields', function() {
-	   console.log('Call_B');
 	   var classLength = $('.nested_receipe_cooking_steps').length;
 	   var count=0;
         for (var i=0; classLength > i ; i++ ) {

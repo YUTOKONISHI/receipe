@@ -17,5 +17,6 @@
 //= require jquery_ujs
 //= require nested_form_fields
 //= require bootstrap-sprockets
+//= require jquery.raty
 //= require_tree .
 

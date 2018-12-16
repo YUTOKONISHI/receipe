@@ -5,6 +5,8 @@
 <% else %>
 <%= link_to "お気に入り解除", add_receipe_path(@receipe),method: :delete %>
 <% end %>
+<%= form_with(model: @receipe_evaluation, url: choose_create_or_update, method: choose_post_or_put, local: true) do |re_e| %>
+<%#= form_with(model: @receipe_evaluation, url: new_rating_receipe_path,  local: true) do |re_e| %>
 <p>
   <strong>Title:</strong>
   <%= @receipe.title %>
@@ -81,6 +83,46 @@
   <% end %>
 </p>
 
+<p>
+	<a href="#rating" data-toggle="modal">レシピを評価する</a>
+	
+	<div class="modal fade" id="rating" tabindex="-1">
+     	<div class="modal-dialog modal-dialog-centered">
+     		<div class="modal-content">
+     			<div class="modal-header">
+     				<h5 class="modal-title">評価する</h5>
+     				<button class="close" data-dismiss="modal"><span>&times;</span></button>
+     			</div>
+
+     			<div class="modal-body">
+     				<%= re_e.hidden_field :user_id, value: session[:usr] %>
+     				<%= re_e.hidden_field :receipe_id, value: params[:receipe_id] %>
+	     			<%= re_e.hidden_field :rating, id: :receipe_rating %>
+     				<div id='star-rating'></div>
+     			</div>
+     			<div class="modal-footer">
+     				<%# if !ReceipeEvaluation.exists?(user_id: session[:usr],receipe_id:@receipe.id) %>
+     				<%= re_e.submit '決定'  %>
+     				<%# else %>
+     				<%#= link_to "決定", update_rating_receipe_path(@receipe_evaluations), method: :put, method: :put, params: {user_id: session[:usr], receipe_id: params[:receipe_id], rating: :rating } %>
+     				<%# end %>
+     				<%#= link_to '決定',  controller: :receipe_evaluations, action: :create , method: :post %>
+     			</div>
+     		</div>
+     	</div>
+   </div>
+</p>
+<% end %>
+
 <%= link_to 'Edit', edit_receipe_path(@receipe) %> |
 <%= link_to 'マイページ', mypage_path %>
 <%= link_to 'ログアウト', controller: :login, action: :logout %>
+
+<script>
+$('#star-rating').raty({
+path: '/assets/',
+click: function(score, e) {
+$("#receipe_rating").val(score)
+}
+});
+</script>

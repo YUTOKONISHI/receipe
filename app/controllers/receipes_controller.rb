@@ -14,9 +14,8 @@ class ReceipesController < ApplicationController
     @receipe_category = ReceipeCategory.find_by(params[:receipe_category_id])
     @receipe = Receipe.find(params[:receipe_id])
     @ingredients = @receipe.ingredients
-    #@replaced_ingredient = @ingredients.find_by(10).replaced_ingredient
-    #@replaced_ingredient = ReplacedIngredient.find_by(id: params[:ingredient_id])
     @cooking_steps = @receipe.cooking_steps
+    
   end
 
   # GET /receipes/new
@@ -79,7 +78,8 @@ class ReceipesController < ApplicationController
     def receipe_params
       params.require(:receipe).permit(:user_id, :receipe_category_id, :title, :introduction, :image_path,  
         ingredients_attributes: [:ingredient_id, :receipe_id, :name, :quantity, {:allergen_ids =>[]},:_destroy, replaced_ingredient_attributes: [:replaced_ingredient_id, :ingredient_id, :name, :quantity, {:allergen_ids =>[]}, :_destroy]],
-        cooking_steps_attributes: [:cooking_step_id, :receipe_id, :number, :description, :image_path, :_destroy]
+        cooking_steps_attributes: [:cooking_step_id, :receipe_id, :number, :description, :image_path, :_destroy],
+        receipe_evaluations_attributes: [:receipe_evaluation_id, :receipe_id, :user_id, :rating, :_destroy]
         )
     end
 end
