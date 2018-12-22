@@ -6,10 +6,14 @@
 <%= link_to "お気に入り解除", add_receipe_path(@receipe),method: :delete %>
 <% end %>
 <%= form_with(model: @receipe_evaluation, url: choose_create_or_update, method: choose_post_or_put, local: true) do |re_e| %>
-<%#= form_with(model: @receipe_evaluation, url: new_rating_receipe_path,  local: true) do |re_e| %>
 <p>
   <strong>Title:</strong>
   <%= @receipe.title %>
+</p>
+
+<p>
+	<strong>レシピの評価</strong>
+	<div id='average-star-rating'></div>
 </p>
 
 <p>
@@ -125,4 +129,11 @@ click: function(score, e) {
 $("#receipe_rating").val(score)
 }
 });
+</script>
+<script>
+$('#average-star-rating').raty({
+path: '/assets/',
+score : <%= average_rate %>
+});
+
 </script>

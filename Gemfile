@@ -13,7 +13,7 @@ gem 'bootstrap-sass'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap'
 gem "font-awesome-rails"
-
+gem 'ransack'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.1'
 # Use sqlite3 as the database for Active Record

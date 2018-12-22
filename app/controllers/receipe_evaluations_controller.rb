@@ -1,6 +1,7 @@
 class ReceipeEvaluationsController < ApplicationController
   before_action :set_receipe_evaluation, only: [:show, :edit, :destroy]
 
+  
   # GET /receipe_evaluations
   # GET /receipe_evaluations.json
   def index
@@ -53,7 +54,7 @@ class ReceipeEvaluationsController < ApplicationController
     receipe = Receipe.find(params[:receipe_id])
     user_rating = params[:rating]
     
-    if ReceipeEvaluation.update(user_id: session_user, receipe_id: receipe.id, rating: user_rating)
+    if ReceipeEvaluation.find_by(user_id: session_user, receipe_id: receipe.id,).update(rating: user_rating)
       redirect_to receipe
     else
     

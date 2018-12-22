@@ -2,6 +2,15 @@ class ReceipesController < ApplicationController
   before_action :check_logined, only: [:new, :edit, :update, :destroy]
   before_action :set_receipe, only: [:show, :edit, :update, :destroy]
 
+  
+  def average_rate
+     score = ReceipeEvaluation.where(receipe_id: params[:receipe_id]).average(:rating)
+     
+     return score
+  end
+  
+  helper_method :average_rate
+
   # GET /receipes
   # GET /receipes.json
   def index
@@ -15,7 +24,6 @@ class ReceipesController < ApplicationController
     @receipe = Receipe.find(params[:receipe_id])
     @ingredients = @receipe.ingredients
     @cooking_steps = @receipe.cooking_steps
-    
   end
 
   # GET /receipes/new

@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
  
+  root to: 'home#index'
   get  'users/mypage' ,to: 'users#mypage', as: :mypage
   get  'users/edit', to: 'users#edit'
   
