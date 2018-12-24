@@ -54,5 +54,4 @@
 
 <%= link_to 'レシピを投稿する', new_receipes_path(user_id: session[:usr]) %>
 <%#= link_to 'レシピを投稿する', controller: :receipes, action: :new %>
-<%= link_to 'ログアウト', controller: :login, action: :logout %>
-
+<%= link_to 'ログアウト', logout_path, method: :post %>

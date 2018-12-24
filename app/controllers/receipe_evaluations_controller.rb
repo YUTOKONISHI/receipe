@@ -29,6 +29,8 @@ class ReceipeEvaluationsController < ApplicationController
     receipe = Receipe.find(params[:receipe_id])
     user_rating = params[:rating]
     
+    
+    
     if ReceipeEvaluation.create(user_id: session_user, receipe_id: receipe.id, rating: user_rating)
       redirect_to receipe
     else
@@ -53,6 +55,7 @@ class ReceipeEvaluationsController < ApplicationController
     session_user = session[:usr]
     receipe = Receipe.find(params[:receipe_id])
     user_rating = params[:rating]
+    
     
     if ReceipeEvaluation.find_by(user_id: session_user, receipe_id: receipe.id,).update(rating: user_rating)
       redirect_to receipe

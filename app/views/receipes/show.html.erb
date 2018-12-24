@@ -87,6 +87,7 @@
   <% end %>
 </p>
 
+<% if session[:usr] %>
 <p>
 	<a href="#rating" data-toggle="modal">レシピを評価する</a>
 	
@@ -106,7 +107,7 @@
      			</div>
      			<div class="modal-footer">
      				<%# if !ReceipeEvaluation.exists?(user_id: session[:usr],receipe_id:@receipe.id) %>
-     				<%= re_e.submit '決定'  %>
+     				<%= re_e.submit '決定', id: :ok  %>
      				<%# else %>
      				<%#= link_to "決定", update_rating_receipe_path(@receipe_evaluations), method: :put, method: :put, params: {user_id: session[:usr], receipe_id: params[:receipe_id], rating: :rating } %>
      				<%# end %>
@@ -116,12 +117,17 @@
      	</div>
    </div>
 </p>
+<% if session[:usr] == @receipe.user_id %>
+<%= link_to 'Edit', edit_receipe_path(@receipe) %> 
 <% end %>
 
-<%= link_to 'Edit', edit_receipe_path(@receipe) %> |
 <%= link_to 'マイページ', mypage_path %>
-<%= link_to 'ログアウト', controller: :login, action: :logout %>
-
+<%= link_to 'ログアウト', logout_path, method: :post %>
+<% else %>
+<%= link_to 'ユーザ登録', new_user_path %>
+<%= link_to 'ログイン', login_index_path %>
+<% end %>
+<% end %>
 <script>
 $('#star-rating').raty({
 path: '/assets/',
@@ -133,7 +139,10 @@ $("#receipe_rating").val(score)
 <script>
 $('#average-star-rating').raty({
 path: '/assets/',
+readOnly: true,
 score : <%= average_rate %>
-});
 
+});
 </script>
+
+

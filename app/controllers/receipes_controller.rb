@@ -3,13 +3,6 @@ class ReceipesController < ApplicationController
   before_action :set_receipe, only: [:show, :edit, :update, :destroy]
 
   
-  def average_rate
-     score = ReceipeEvaluation.where(receipe_id: params[:receipe_id]).average(:rating)
-     
-     return score
-  end
-  
-  helper_method :average_rate
 
   # GET /receipes
   # GET /receipes.json
