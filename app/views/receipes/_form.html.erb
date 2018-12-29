@@ -1,3 +1,4 @@
+<%#= form_with(model: receipe, url: receipe_create_or_update, method: receipe_post_or_patch, local: true) do |f| %>
 <%= form_with(model: receipe,  local: true) do |f| %>
   <% if receipe.errors.any? %>
     <div id="error_explanation">

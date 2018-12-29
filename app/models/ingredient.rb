@@ -9,7 +9,11 @@ class Ingredient < ApplicationRecord
   has_many :allergens, through: :allergens_ingredients
   accepts_nested_attributes_for :allergens_ingredients, allow_destroy: true #この行を追加
   
+
+  
+  
   validates :name, presence: true
   validates :quantity, presence: true
-  
+ 
+
 end

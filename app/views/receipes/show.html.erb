@@ -5,7 +5,7 @@
 <% else %>
 <%= link_to "お気に入り解除", add_receipe_path(@receipe),method: :delete %>
 <% end %>
-<%= form_with(model: @receipe_evaluation, url: choose_create_or_update, method: choose_post_or_put, local: true) do |re_e| %>
+<%= form_with(model: @receipe_evaluation, url: evaluate_create_or_update, method: evaluate_post_or_patch, local: true) do |re_e| %>
 <p>
   <strong>Title:</strong>
   <%= @receipe.title %>

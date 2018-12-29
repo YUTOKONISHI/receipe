@@ -8,25 +8,41 @@
 	</div>	
 	
 	<p>カテゴリから検索</p>
-	<%= f.collection_radio_buttons :receipe_category_id_eq , @receipe_category, :id, :name , {:checked => false}%>
+	<%= f.collection_radio_buttons :receipe_category_id_eq , @receipe_category, :id, :name , {:checked => true} %>
+	<% if session[:usr]%>
 	
+	<% else %>
 	<p>検索オプション</p>
-    <%= params[:q] %><br>	
-    <%= f.collection_check_boxes :ingredients_allergens_id_in_any, @allergens, :id, :name, {:checked => false, multiple: true } %> <%# not条件? %>
-
-    <%# end %>
+	<%#=@search %><br>
+    <%= params[:q] %><br>
+    <%= f.collection_check_boxes :ingredients_allergens_id_not_eq_all, Allergen.all, :id, :name, {:checked => true}%>
+    <%#= f.collection_check_boxes :having_all_allergens_of, Allergen.all, :id, :name %>
+    <%#= f.collection_check_boxes :ingredients_allergens_id_not_eq_any, Allergen.all, :id, :name %>
+    <%#= f.collection_check_boxes :ingredients_allergens_id_not_in, @allergens, :id, :name, {:checked => true, multiple: true } %>
+    <% end %>
 	<div class="actions"><%= f.submit "検索" %></div>
 	<% end %>
 </div>
+<% if session[:usr]%>
+<h2>検索結果</h2>
+<% @a.each do |s| %>
+<ul>
+<li>レシピ名: <%= s.title %></li>
+</ul>
+<% end %>
+<% end %>
 
-
+<br>
+<% @cache.each do |c| %>
+value: <%= c %>
+<% end %>
 
 <h2>検索結果</h2>
 <% @results.each do |result| %>
 <ul>
   <li>レシピ名: <%= result.title %></li>
   
-  <li>カテゴリ: <%= category_name(result.receipe_category_id) %>
+  <li>カテゴリ: <%#= category_name(result.receipe_category_id) %>
   
   </li>
   
@@ -37,22 +53,24 @@
   </li>
   
   <li>アレルギー物質: 
-  		<% result.ingredients.each do |ingredient| %>
-   			<% ingredient.allergens.each do |allergen| %>
-           	<%= allergen.name %><br>
-   			<% end %>
-   		<% end %>
+  		<%# result.ingredients.each do |ingredient| %>
+   			<%# ingredient.allergens.each do |allergen| %>
+           	<%#= allergen.name %><br>
+   			<%# end %>
+   		<%# end %>
   </li>
   
-  <li>レシピの紹介: <%= result.introduction %></li>
+  <li>レシピの紹介: <%#= result.introduction %></li>
   
 </ul>
+
+
 
 <script>
 $('#average-star-rating').raty({
 path: '/assets/',
 readOnly: true,
-score : <%= average_rate_for_search_result(result.id) %>
+score : <%#= average_rate_for_search_result(result.id) %>
 
 });
 </script>
