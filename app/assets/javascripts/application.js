@@ -12,9 +12,9 @@
 //
 //= require rails-ujs
 //= require activestorage
-//= require turbolinks
 //= require jquery
 //= require jquery_ujs
+//= require turbolinks
 //= require nested_form_fields
 //= require bootstrap-sprockets
 //= require jquery.raty

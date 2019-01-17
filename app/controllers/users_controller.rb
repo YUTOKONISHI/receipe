@@ -134,7 +134,7 @@ end
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
       params.require(:user).permit(:email, :first_name, :last_name, :password, :image_path, :registration, {:allergen_ids =>[]}, {:receipe_ids =>[]},
-      receipe_evaluations_attributes: [:receipe_evaluation_id, :receipe_id, :user_id, :ratiing, :_destroy])
+      receipe_evaluations_attributes: [:id, :receipe_id, :user_id, :ratiing, :_destroy])
     end
     
 

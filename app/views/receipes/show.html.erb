@@ -1,7 +1,7 @@
 <div class="jumbotron jumbotron-receipe">
 	<p id="notice"><%= notice %></p>
 	<% if session[:usr] == @receipe.user_id %>
-		<%= link_to '編集する', edit_receipe_path(@receipe), class: "btn btn-color text-light" %>
+		<%= link_to '編集する', edit_receipe_path(@receipe), class: "btn btn-color text-light",  data: {"turbolinks" => false} %>
 	<% end %>
 	<br><br>
 	<% if session[:usr] %>
