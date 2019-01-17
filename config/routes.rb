@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
  
   root to: 'home#index'
+  post '/', to: 'home#index'
+  get  '/search', to: 'home#search', as: :search
   get  'users/mypage' ,to: 'users#mypage', as: :mypage
   get  'users/edit', to: 'users#edit'
-  
+  get  'users/cancel_membership', to: 'users#cancel_membership', as: :cancel_membership
+  post 'users/withdrawal' 
   resources :cooking_steps, param: :cooking_step_id
   resources :receipes, param: :receipe_id, except: [:new] do
     
@@ -43,7 +46,6 @@ Rails.application.routes.draw do
   post 'login/auth'
   post 'login/index', to: 'login#logout', as: :logout
  
-  get  'users/cancel_membership', to: 'users#cancel_membership', as: :cancel_membership
-  post 'users/withdrawal'
+ 
 
 end

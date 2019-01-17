@@ -1,72 +1,75 @@
 
- <%# else %>
- 
- <%# @url = choose_new_or_edit %>
- <%# end %>
-<%#= form_for(@user, url: user_path) do |f| %>
-<%= form_for(@user, url: choose_new_or_edit) do |f| %>
- 
-<%#
-<%#= form_with(model: user, local: true) do |f| %>
-  <% if user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+	<div class="jumbotron text-black">
+		<div class="jumbotron col-md-6">
+		 <% if session[:usr] %>
+		 <h3>登録情報変更</h3>
+		 <% else %>
+		 <h3>ユーザ登録</h3>
+		 <% end %>
+		
+		<%= form_for(@user, url: choose_new_or_edit) do |f| %>
 
-      <ul>
-      <% user.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+  			<% if user.errors.any? %>
+    		<div id="error_explanation">
+      			<h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
 
-  <div class="field">
-    <%= f.label :メールアドレス %>
-    <%= f.text_field :email %>
-  </div>
+      			<ul>
+      				<% user.errors.full_messages.each do |message| %>
+        				<li><%= message %></li>
+      				<% end %>
+      			</ul>
+    		</div>
+  		<% end %>
 
-  <div class="field">
-    <%= f.label :姓 %>
-    <%= f.text_field :last_name %>
-  </div>
+	  <div class="field">
+    	<%= f.label :メールアドレス %>
+    	<%= f.text_field :email %>
+  	  </div>
 
-  <div class="field">
-    <%= f.label :名 %>
-    <%= f.text_field :first_name %>
-  </div>
+	  <div class="field">
+    	<%= f.label :姓　　　　　　 %>
+    	<%= f.text_field :last_name %>
+  	  </div>
 
-  <div class="field">
-    <%= f.label :パスワード %>
-    <%= f.password_field :password %>
-  </div>
+  	  <div class="field">
+    	<%= f.label :名　　　　　　 %>
+    	<%= f.text_field :first_name %>
+  	  </div>
 
-  <div class="field">
-    <%= f.collection_check_boxes(:allergen_ids, Allergen.all, :id, :name) do |al_usr| %>
-      <%= al_usr.label { al_usr.check_box + al_usr.text } %>
-    <% end %>
-  </div>
+ 	 <div class="field">
+    	<%= f.label :パスワード　　%>
+    	<%= f.password_field :password %>
+  	 </div>
 
-  <div class="field">
-    <%= f.label :プロフィール画像 %>
-    <%= f.file_field :image_path, id: :user_image_path %>
+	 <div class="field">
+  		<%= f.label :アレルギー情報　　%><br>
+    	<%= f.collection_check_boxes(:allergen_ids, Allergen.all, :id, :name) do |al_usr| %>
+      	<%= al_usr.label { al_usr.check_box + al_usr.text } %>
+    	<% end %>
+  	 </div>
+
+	 <div class="field">
+    	<%= f.label :プロフィール画像 %>
+    	<%= f.file_field :image_path, id: :user_image_path %>
+	 </div>
   
-  </div>
-  
-  <div class="field">
+	 <div class="field">
         <%# 一時ディレクトリの場所にある画像を表示 %>
        <%= image_tag(@user.image_path_url) rescue nil %>
        <%= hidden_field_tag :"cache[image_path]", @user.image_path.cache_name %>     
-  </div>
-  <% if @path.is('users#new') %>
-  	<div class="field">
-    	<%= f.label :会員登録に同意する場合はチェックを入れてください %>
-    	<%= f.check_box :registration %>
-  	</div>
-  <% end %>
+  	 </div>
+  	<% if @path.is('users#new') %>
+  		<div class="field">
+    		<%= f.label :会員登録に同意する場合はチェックを入れてください %>
+    		<%= f.check_box :registration %>
+  		</div>
+  	<% end %>
   	<div class="actions">
-    	<%= f.submit '次へ'  %>
+    	<%= f.submit '次へ' , class: "btn btn-color text-light" %>
   	</div>
-<% end %>
-<% if @path.is('users#edit') %>
-<%= link_to '退会手続き', cancel_membership_path %>
-<% end %>
+	<% end %>
+	<% if @path.is('users#edit') %>
+	<%= link_to '退会手続き', cancel_membership_path, class: "btn btn-color text-light" %>
+	<% end %>
+  </div>
+</div>

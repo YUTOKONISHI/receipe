@@ -7,17 +7,17 @@ module ReceipesHelper
   
    def receipe_create_or_update
     if !Receipe.exists?(user_id: session[:usr], id: params[:receipe_id])
-      new_receipes_path
+      receipes_path
     else 
-      update_receipe_path
+      receipe_path
     end
   end  
   
-  def receipe_post_or_patch
+  def receipe_post_or_put
     if !Receipe.exists?(user_id: session[:usr], id: params[:receipe_id])
       "POST"
     else 
-      "PATCH"
+      "PUT"
     end
   end  
   

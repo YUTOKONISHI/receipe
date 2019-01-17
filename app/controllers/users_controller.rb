@@ -17,10 +17,10 @@ class UsersController < ApplicationController
   def mypage
     @user_receipes = Receipe.where(user_id: session[:usr])
     #@user_receipes = Receipe.where(user_id: params[:user_id])
-    @receipes = @user_receipes.paginate(page: params[:myreceipe_page], :per_page => 1 )
+    @receipes = @user_receipes.paginate(page: params[:myreceipe_page], :per_page => 2 )
     
     @bookmark_receipes = Bookmark.where(user_id: session[:usr])
-    @bookmarks = @bookmark_receipes.paginate(page: params[:bookmark_page], :per_page => 1 )
+    @bookmarks = @bookmark_receipes.paginate(page: params[:bookmark_page], :per_page => 2 )
      
   end
 
@@ -81,7 +81,7 @@ end
         #format.html { redirect_to new_user_url }
         format.html { render :new }
       elsif @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
+        format.html { redirect_to @user, notice: 'ユーザ登録が完了しました' }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
@@ -101,7 +101,7 @@ end
       
       elsif @user.update(user_params)
          
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
+        format.html { redirect_to @user, notice: 'ユーザ情報を変更しました' }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit }
@@ -114,8 +114,9 @@ end
   # DELETE /users/1.json
   def destroy
     @user.destroy
+    reset_session
     respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
+      format.html { redirect_to root_path, notice: 'ユーザ情報を削除しました' }
       format.json { head :no_content }
     end
   end
@@ -123,7 +124,11 @@ end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      @user = User.find(session[:usr])
+      if session[:usr]
+        @user = User.find(session[:usr])
+      else
+        @user = User.find(params[:user_id])  #ユーザ登録時のバグ対策
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -9,7 +9,12 @@ module HomeHelper
      
      score = ReceipeEvaluation.where(receipe_id: search_id).average(:rating)
      
-     return score
+     if score.nil?
+       
+     else
+       return score
+     end
+     
   end
   
   

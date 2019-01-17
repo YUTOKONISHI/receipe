@@ -1,132 +1,128 @@
-<p id="notice"><%= notice %></p>
+<div class="jumbotron jumbotron-receipe">
+	<p id="notice"><%= notice %></p>
+	<% if session[:usr] == @receipe.user_id %>
+		<%= link_to '編集する', edit_receipe_path(@receipe), class: "btn btn-color text-light" %>
+	<% end %>
+	<br><br>
+	<% if session[:usr] %>
+		<% if !Bookmark.exists?(user_id: session[:usr],receipe_id:@receipe.id) %>
+			<%= link_to "お気に入り登録", add_receipe_path(@receipe),method: :post, class: "btn btn-color text-light" %>
+		<% else %>
+			<%= link_to "お気に入り解除", add_receipe_path(@receipe),method: :delete, class: "btn btn-color text-light" %>
+		<% end %>
+    <% end %>
+    
+    
+	<%= form_with(model: @receipe_evaluation, url: evaluate_create_or_update, method: evaluate_post_or_patch, local: true) do |re_e| %>
+	<p class="h3">
+  	レシピ名:
+  	<%= @receipe.title %>
+	</p>
 
-<% if !Bookmark.exists?(user_id: session[:usr],receipe_id:@receipe.id) %>
-<%= link_to "お気に入り登録", add_receipe_path(@receipe),method: :post %>
-<% else %>
-<%= link_to "お気に入り解除", add_receipe_path(@receipe),method: :delete %>
-<% end %>
-<%= form_with(model: @receipe_evaluation, url: evaluate_create_or_update, method: evaluate_post_or_patch, local: true) do |re_e| %>
-<p>
-  <strong>Title:</strong>
-  <%= @receipe.title %>
-</p>
-
-<p>
-	<strong>レシピの評価</strong>
-	<div id='average-star-rating'></div>
-</p>
-
-<p>
-  <strong>Receipe category:</strong>
-  <%#= @receipe.receipe_category_id %>
-  <%= @receipe_category.name %>
-</p>
-
-<p>
-  <strong>Introduction:</strong>
-  <%= @receipe.introduction %>
-</p>
-
-<p>
-  <table>
-  <thead>
-    <tr>
-    	<strong>
-      <th>材料名</th>
-      <th>分量</th>
-      <th>アレルギー成分</th>
-      <th>代替食品</th>
-      <th>代替食品の分量</th>
-      <th>代替食品のアレルギー成分</th>
-      <th colspan="6"></th>
-       </strong>
-    </tr>
-  </thead>
-  
-  <tbody>
-  	<% @ingredients.each do |ingredient| %>
-  	<tr>
-  		<td><%= ingredient.name %></td>
-  		<td><%= ingredient.quantity %></td>
-
-  		<td>
-  			<% ingredient.allergens.each do |allergen| %>
-  			 <%= allergen.name %>
-  			<% end %>
-       </td>
-       <% if ingredient.replaced_ingredient.present? %>
-       <td>
-          <%= ingredient.replaced_ingredient.name %>
-  		</td>
-  		<td>
-          <%= ingredient.replaced_ingredient.quantity%>
-  		</td>
-  		<td>
-  			<% ingredient.replaced_ingredient.allergens.each do |allergen|  %>
-  			 <%= allergen.name %>
-  			<% end %>
-       </td>
-  		<% end %>
-    </tr>
-  		
-  	<% end %>  	 
-  </tbody>
-</p>
-
-<p>
-  <strong>画像:</strong>
-  <%= image_tag(@receipe.image_path_url, :width => 400, :height => 300) rescue nil %>
-</p>
-
-
-  
-<p>
-  <strong>料理の作成手順</strong><br>
-  <% @cooking_steps.each do |cooking_step| %>
-  <%= cooking_step.number%><%=". " %><%= cooking_step.description %><%=" "%><%= image_tag(cooking_step.image_path_url) rescue nil %><br>
-  <% end %>
-</p>
-
-<% if session[:usr] %>
-<p>
-	<a href="#rating" data-toggle="modal">レシピを評価する</a>
+  	<%= image_tag(@receipe.image_path_url, :width => 600, :height => 480, :class => "receipe_image") rescue nil %>
+  	
+	<p class="h4">レシピ紹介</p>
+	 <%= @receipe.introduction %>
 	
-	<div class="modal fade" id="rating" tabindex="-1">
-     	<div class="modal-dialog modal-dialog-centered">
-     		<div class="modal-content">
-     			<div class="modal-header">
-     				<h5 class="modal-title">評価する</h5>
-     				<button class="close" data-dismiss="modal"><span>&times;</span></button>
-     			</div>
+	<p class="h4 mt-2"><div id='average-star-rating'>レシピの評価:</div></p>
+	
+	<p class="h5 mt-5">レシピカテゴリ: 	<%= @receipe_category.name %> </p>
+    <p class="h4 mt-5">材料</p>
 
-     			<div class="modal-body">
-     				<%= re_e.hidden_field :user_id, value: session[:usr] %>
-     				<%= re_e.hidden_field :receipe_id, value: params[:receipe_id] %>
-	     			<%= re_e.hidden_field :rating, id: :receipe_rating %>
-     				<div id='star-rating'></div>
-     			</div>
-     			<div class="modal-footer">
-     				<%# if !ReceipeEvaluation.exists?(user_id: session[:usr],receipe_id:@receipe.id) %>
-     				<%= re_e.submit '決定', id: :ok  %>
-     				<%# else %>
-     				<%#= link_to "決定", update_rating_receipe_path(@receipe_evaluations), method: :put, method: :put, params: {user_id: session[:usr], receipe_id: params[:receipe_id], rating: :rating } %>
-     				<%# end %>
-     				<%#= link_to '決定',  controller: :receipe_evaluations, action: :create , method: :post %>
+	<div class="ml-5">
+  		<table class="table table-sm col-5 text-center table-light table-striped">
+  			<thead>
+    			<tr>
+      					<th>材料名</th>
+      					<th>分量</th>
+      					<th>アレルギー成分</th>
+      					<th>代替食品</th>
+      					<th>代替食品の分量</th>
+      					<th>代替食品のアレルギー成分</th>
+    			</tr>
+  			</thead>
+  
+  			<tbody>
+  			<% @ingredients.each do |ingredient| %>
+  				<tr>
+  					<td><%= ingredient.name %></td>
+  					<td><%= ingredient.quantity %></td>
+
+  					<td>
+  						<% ingredient.allergens.each do |allergen| %>
+  			 				<%= allergen.name %>
+  						<% end %>
+       			</td>
+       			<% if ingredient.replaced_ingredient.present? %>
+       				<td>
+          					<%= ingredient.replaced_ingredient.name %>
+  						</td>
+  						<td>
+          					<%= ingredient.replaced_ingredient.quantity %>
+  						</td>
+  						<td>
+  							<% ingredient.replaced_ingredient.allergens.each do |allergen|  %>
+  			 					<%= allergen.name %>
+  							<% end %>
+       				</td>
+       			<% else %>
+       				<td>
+          					&nbsp
+  						</td>
+  						<td>
+          					&nbsp
+  						</td>
+  						<td>
+  						   &nbsp
+       				</td>
+  					<% end %>
+    			</tr>
+  			<% end %>  	 
+  			</tbody>
+  		</table>
+	</div>
+	
+
+<br clear="all">  
+	<p class=" h4 mt-5 ml-3">料理の作成手順</p>
+	<div class="h5 ml-5">
+  	<% @cooking_steps.each do |cooking_step| %>
+  		<%= cooking_step.number%><%=". " %><%= cooking_step.description %><br>
+  		<%= image_tag(cooking_step.image_path_url, :width => 240, :height => 180, :class => "receipe_image") rescue nil %><br>
+  		<br clear="all"> 
+  	<% end %>
+  	</div>
+	<% if session[:usr] %>
+	<p>
+		<a href="#rating" data-toggle="modal" class="btn btn-color text-light"">レシピを評価する</a>
+	
+		<div class="modal fade" id="rating" tabindex="-1">
+     		<div class="modal-dialog modal-dialog-centered">
+     			<div class="modal-content">
+     				<div class="modal-header">
+     					<h5 class="modal-title">評価する</h5>
+     					<button class="close" data-dismiss="modal"><span>&times;</span></button>
+     				</div>
+
+     				<div class="modal-body">
+     					<%= re_e.hidden_field :user_id, value: session[:usr] %>
+     					<%= re_e.hidden_field :receipe_id, value: params[:receipe_id] %>
+	     				<%= re_e.hidden_field :rating, id: :receipe_rating %>
+     					<div id='star-rating'></div>
+     				</div>
+     				<div class="modal-footer">
+     					<%# if !ReceipeEvaluation.exists?(user_id: session[:usr],receipe_id:@receipe.id) %>
+     					<%= re_e.submit '決定', id: :ok  %>
+     					<%# else %>
+     					<%#= link_to "決定", update_rating_receipe_path(@receipe_evaluations), method: :put, method: :put, params: {user_id: session[:usr], receipe_id: params[:receipe_id], rating: :rating } %>
+     					<%# end %>
+     					<%#= link_to '決定',  controller: :receipe_evaluations, action: :create , method: :post %>
+     				</div>
      			</div>
      		</div>
-     	</div>
-   </div>
-</p>
-<% if session[:usr] == @receipe.user_id %>
-<%= link_to 'Edit', edit_receipe_path(@receipe) %> 
-<% end %>
-
-<%= link_to 'マイページ', mypage_path %>
-<%= link_to 'ログアウト', logout_path, method: :post %>
-<% else %>
-<%= link_to 'ユーザ登録', new_user_path %>
-<%= link_to 'ログイン', login_index_path %>
-<% end %>
+   		</div>
+	</p>
+	<% end %>
 <% end %>
 <script>
 $('#star-rating').raty({
@@ -145,4 +141,4 @@ score : <%= average_rate %>
 });
 </script>
 
-
+</div>

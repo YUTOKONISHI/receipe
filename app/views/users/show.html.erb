@@ -1,36 +1,28 @@
+<div class="jumbotron text-black">
+	<div class="jumbotron col-md-6">
+
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Email:</strong>
+  <strong>メールアドレス:</strong>
   <%= @user.email %>
 </p>
 
 <p>
-  <strong>First name:</strong>
-  <%= @user.first_name %>
+  <strong>氏名:</strong>
+  <%= @user.first_name %>  <%= @user.last_name %>
 </p>
 
 <p>
-  <strong>Last name:</strong>
-  <%= @user.last_name %>
-</p>
-
-
-<p>
-  <strong>Password digest:</strong>
-  <%= @user.password_digest %>
-</p>
-
-<p>
-  <strong>Image path:</strong>
    <td><%= image_tag(@user.image_path_url) rescue nil %></td>
 </p>
 
 <p>
-  <strong>Registration:</strong>
-  <%= @user.registration %>
+  <strong>アレルギー品目</strong>
+    <% @user.allergens.each do |allergen| %>
+  	 	<%= allergen.name %> &nbsp
+  	<% end %>
 </p>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%#= link_to 'Back', users_path %>
-<%= link_to 'マイページ', :controller => "users", :action => "mypage" %>
+</div>
+</div>

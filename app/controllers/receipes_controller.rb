@@ -27,6 +27,10 @@ class ReceipesController < ApplicationController
     @user = User.find(params[:user_id])
     @ingredient.build_replaced_ingredient
   end
+ 
+  def edit
+    
+  end
 
   # POST /receipes
   # POST /receipes.json
@@ -50,7 +54,7 @@ class ReceipesController < ApplicationController
   def update
     respond_to do |format|
       if @receipe.update(receipe_params)
-        format.html { redirect_to @receipe, notice: 'Receipe was successfully updated.' }
+        format.html { redirect_to @receipe, notice: 'レシピを更新しました' }
         format.json { render :show, status: :ok, location: @receipe }
       else
         format.html { render :edit }
@@ -64,7 +68,7 @@ class ReceipesController < ApplicationController
   def destroy
     @receipe.destroy
     respond_to do |format|
-      format.html { redirect_to receipes_url, notice: 'Receipe was successfully destroyed.' }
+      format.html { redirect_to receipes_url, notice: 'レシピは削除されました' }
       format.json { head :no_content }
     end
   end
@@ -78,9 +82,10 @@ class ReceipesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def receipe_params
       params.require(:receipe).permit(:user_id, :receipe_category_id, :title, :introduction, :image_path,  
-        ingredients_attributes: [:ingredient_id, :receipe_id, :name, :quantity, {:allergen_ids =>[]},:_destroy, replaced_ingredient_attributes: [:replaced_ingredient_id, :ingredient_id, :name, :quantity, {:allergen_ids =>[]}, :_destroy]],
-        cooking_steps_attributes: [:cooking_step_id, :receipe_id, :number, :description, :image_path, :_destroy],
-        receipe_evaluations_attributes: [:receipe_evaluation_id, :receipe_id, :user_id, :rating, :_destroy]
+        ingredients_attributes: [:id, :receipe_id, :name, :quantity, {:allergen_ids =>[]},:_destroy], 
+        replaced_ingredient_attributes: [:id, :ingredient_id, :name, :quantity, {:allergen_ids =>[]}, :_destroy],
+        cooking_steps_attributes: [:id, :receipe_id, :number, :description, :image_path, :_destroy],
+        receipe_evaluations_attributes: [:id, :receipe_id, :user_id, :rating, :_destroy]
         )
     end
 end

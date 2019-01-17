@@ -1,86 +1,46 @@
-<h1>レシピサイト</h1>
 
-<div>
-	<p>レシピ名から検索</p>
-	<%= search_form_for @search, url: root_path  do |f| %>
-	<div class="form-group">
-		<%= f.text_field :title_cont, class: "form-control" %>
-	</div>	
+	<div class="jumbotron jumbotron-img text-black">
+		<div class="jumbotron col-md-6">
+		<h3>レシピ検索</h3>
+		<%= search_form_for @search, url: root_path do |f| %>
+		<%#= search_form_for @search, url: root_path, html: { method: :post, class: 'ransack-form' } do |f| %>
+			<p class="h6">レシピ名から検索</p>
+		
+			<div class="form-group">
+				<%= f.text_field :title_cont, :style => "width:80%", class: "form-control"  %>
+			</div>	
 	
-	<p>カテゴリから検索</p>
-	<%= f.collection_radio_buttons :receipe_category_id_eq , @receipe_category, :id, :name , {:checked => true} %>
-	<% if session[:usr]%>
+			<p class="h6">カテゴリから検索</p>
+				<%= f.collection_radio_buttons :receipe_category_id_eq , @receipe_category, :id, :name , {:checked => true} %>
+			<% if session[:usr]%>
 	
-	<% else %>
-	<p>検索オプション</p>
-	<%#=@search %><br>
-    <%= params[:q] %><br>
-    <%= f.collection_check_boxes :ingredients_allergens_id_not_eq_all, Allergen.all, :id, :name, {:checked => true}%>
-    <%#= f.collection_check_boxes :having_all_allergens_of, Allergen.all, :id, :name %>
-    <%#= f.collection_check_boxes :ingredients_allergens_id_not_eq_any, Allergen.all, :id, :name %>
-    <%#= f.collection_check_boxes :ingredients_allergens_id_not_in, @allergens, :id, :name, {:checked => true, multiple: true } %>
-    <% end %>
-	<div class="actions"><%= f.submit "検索" %></div>
-	<% end %>
-</div>
-<% if session[:usr]%>
-<h2>検索結果</h2>
-<% @a.each do |s| %>
-<ul>
-<li>レシピ名: <%= s.title %></li>
-</ul>
-<% end %>
-<% end %>
+			<% else %>
+			<p class="h6">検索オプション(除外項目にチェック)</p>
+    			<%= f.collection_check_boxes :ingredients_allergens_id_not_eq_all, Allergen.all, :id, :name, {:checked => true}%>
+    		<% end %>
+    		<%#= hidden_field_tag 'page', '1', {class: 'ransack-page'} %>
+    	
+    	 	<%# if params[:q][:title_cont].present? %>
+    			<%# params[:param1] = params[:q][:title_cont] %>
+    	 	<%# end %>
+    		<%#= hidden_field_tag 'param1', params[:param1] %>
 
-<br>
-<% @cache.each do |c| %>
-value: <%= c %>
-<% end %>
+    		<%# if params[:q][:receipe_category_id_eq].present? %>
+    			<%# params[:param2] = category_name(params[:q][:receipe_category_id_eq]) %>
+    		<%# end %>
+    		<%#= hidden_field_tag 'param2', params[:param2] %>
 
-<h2>検索結果</h2>
-<% @results.each do |result| %>
-<ul>
-  <li>レシピ名: <%= result.title %></li>
-  
-  <li>カテゴリ: <%#= category_name(result.receipe_category_id) %>
-  
-  </li>
-  
-  <li>レシピの評価: 
-  	
-  	<div id='average-star-rating'></div>
-  	
-  </li>
-  
-  <li>アレルギー物質: 
-  		<%# result.ingredients.each do |ingredient| %>
-   			<%# ingredient.allergens.each do |allergen| %>
-           	<%#= allergen.name %><br>
-   			<%# end %>
-   		<%# end %>
-  </li>
-  
-  <li>レシピの紹介: <%#= result.introduction %></li>
-  
-</ul>
+    		<%# if params[:q][:ingredients_allergens_id_not_eq_all].present? %>
+    	    	<%# params[:param3] = "" %>
+		    	<%# @allergens.each do |allergen| %>
+		    		<%# params[:param3] = params[:param3] + allergen.name + " " %>
+		    	<%# end %>
+			<%# end %>
+    		<%#= hidden_field_tag 'param3', params[:param3] %>
+    	<%# end %>
+			<div class="actions"><%= f.submit "検索", class: "btn btn-color text-light" %></div>
+		<% end %>
+	   </div>
+	</div>
 
-
-
-<script>
-$('#average-star-rating').raty({
-path: '/assets/',
-readOnly: true,
-score : <%#= average_rate_for_search_result(result.id) %>
-
-});
-</script>
-
-<% end %>
-
-<% if session[:usr] %>
-<%= link_to 'マイページ', mypage_path %>
-<%= link_to 'ログアウト', logout_path, method: :post %>
-<% else %>
-<%= link_to 'ユーザ登録', new_user_path %>
-<%= link_to 'ログイン', login_index_path %>
-<% end %>
+<%= render 'search', home: @home %>

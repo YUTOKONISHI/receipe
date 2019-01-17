@@ -1,21 +1,23 @@
- <p style="color: Red"><%= @error %></p>
+<div class="jumbotron text-black">
+	<div class="jumbotron col-md-6">
+		<p style="color: Red"><%= @error %></p>
+		<h3>ログイン認証</h3>
 
-<%= form_tag action: :auth do %>
+		<%= form_tag action: :auth do %>
 
-  <div class="field">
-  	<%= label_tag :email, 'メールアドレス:' %>
-  	<%= text_field_tag :email, '', size: 20 %>
-  </div>
+	    	<div class="field">
+  				<%= label_tag :email, 'メールアドレス:' %>
+  				<%= text_field_tag :email, '', size: 20 %>
+  			</div>
 
-  </div>
-  <div class="field">
-    <%= label_tag :password, 'パスワード:' %>
-    <%= password_field_tag :password, '', size: 20 %>
-  </div>  
+  			<div class="field">
+    			<%= label_tag :password, 'パスワード:　　' %>
+    			<%= password_field_tag :password, '', size: 20 %>
+  			</div>  
   
-  <%= hidden_field_tag :referer, flash[:referer] %>
-  <%= submit_tag 'ログイン' %>
-<% end %>
+  			<%= hidden_field_tag :referer, flash[:referer] %>
+  			<%= submit_tag 'ログイン' %>
+		<% end %>
 
-
-<%= link_to 'Back', root_path %>
+	</div>
+</div>

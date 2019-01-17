@@ -1,3 +1,5 @@
+<div class="jumbotron text-black">
+	<div class="jumbotron col-md-6">
 <%= form_for @user do |f| %>
 	<div class="field">
 		メールアドレス: <%= @user.email %>
@@ -47,17 +49,14 @@
        <%= hidden_field_tag :"cache[image_path]", @user.image_path.cache_name %>
     </div>
 
-	<div class="field">
-		会員フラグ: <%= @user.registration %>
-		<%= f.hidden_field :registration %>
-	</div>
+    <p>上記内容でよろしければ登録ボタンを押してください</p>
     
     <div class="actions">
-    	<%= f.submit 'Back!', name: 'back' %>
+    	<%= f.submit '戻る', name: 'back', class: "btn btn-color text-light" %>
     </div>
 
     <div class="actions">
-    	<%= f.submit 'create!' , id: :btn %>
+    	<%= f.submit '登録' , id: :btn, class: "btn btn-color text-light" %>
     </div>
 	
 	
@@ -73,3 +72,5 @@ $("#btn").click(function() {
     $('.allergen').prop('disabled', false);
 });
 </script>
+</div>
+</div>

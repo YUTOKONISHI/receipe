@@ -1,0 +1,71 @@
+
+<%= params[:param1] rescue nil %>
+<%= params[:param2] rescue nil %>
+<%= params[:param3] rescue nil %>
+
+<div class="jumbotron">
+	<h2>検索結果</h2>
+	<% if params[:q].present? %>
+		<% if params[:q][:title_cont].present? %>
+			レシピ名: <%= params[:q][:title_cont] %><br>
+			<% params[:param1] = params[:q][:title_cont] %>
+		<% end %>
+		<% if params[:q][:receipe_category_id_eq].present? %>
+			カテゴリ: <%= category_name(params[:q][:receipe_category_id_eq]) %><br>
+			<% params[:param2] = category_name(params[:q][:receipe_category_id_eq]) %>
+		<% end %>
+		
+		<% if @allergens.present? %>
+		    アレルギー物質: 
+		    <% params[:param3] = "" %>
+		    <% @allergens.each do |allergen| %>
+		    	<%= allergen.name %>&nbsp
+		    	<% params[:param3] = params[:param3] + allergen.name + " " %>
+		    <% end %>
+		<% end %>
+	<% end %>
+	
+<% @results.each do |result| %>
+
+		<div class="card-group">	
+			<%= link_to(receipe_path(result), class: 'card') do %>
+     				<div class="card-body">
+     					<%= image_tag(result.image_path_url, :class => "card-img")  rescue nil %>
+     					<h4 class="card-text"><%= result.title %></h4>
+     					<div id='average-star-rating'></div>
+     					
+      					<p class="card-text h5">カテゴリ: <%= category_name(result.receipe_category_id) %></p>
+						<p class="card-text h5">アレルギー物質:
+					   <% allergen_array = [] %>
+  						<% result.ingredients.each do |ingredient| %>
+   							<% ingredient.allergens.each do |allergen| %>
+           					<% allergen_array.push(allergen.name) %>
+   							<% end %>
+   						<% end %>
+   						
+   						<% allergen_array.uniq.each do |allergen| %>
+   							<%= allergen %>&nbsp
+   						<% end %>
+  			           </p>
+  						<p class="card-text h5">レシピの紹介: <%= result.introduction %></p>
+						<script>
+						$(function(i){
+							$('#average-star-rating').attr('id', i + 1).raty({
+							path: '/assets/',
+							readOnly: true,
+							number: 5,
+							score : <%= average_rate_for_search_result(result.id) %>
+						});});
+						</script>
+					</div>
+				<% end %>
+	    </div>
+
+<% end %>
+<br><br>
+
+<div class="ransack-paginationa">
+<%= will_paginate @results, :renderer =>  WillPaginate::ActionView::BootstrapLinkRenderer rescue nil %>
+</div>
+</div>
+	

@@ -1,57 +1,95 @@
-<h1>マイページ</h1>
- 
-<h2>プロフィール</h2> 
 
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
+<div class="jumbotron mt-5">
+	<div class="profile">
+		<h3>プロフィール</h3> 
 
-<p>
-  <strong>氏名:</strong>
-  <%= @user.first_name %>  <%= @user.last_name %>
-</p>
+		<p>
+  			<strong>Email:</strong>
+  			<%= @user.email %>
+		</p>
 
-<%= image_tag(@user.image_path_url) rescue nil %>
+		<p>
+  			<strong>氏名:</strong>
+  			<%= @user.first_name %>  <%= @user.last_name %>
+		</p>
 
-<p>
-  <strong>アレルギー品目</strong>
-    <% @user.allergens.each do |allergen| %>
-  	 <%= allergen.name %>
-  	 <% end %>
-  
-	 <%#= collection_check_boxes(:user, :allergen_ids, Allergen.all, :id, :name) do |al_usr| %>
-     <%#= al_usr.label { al_usr.check_box(disabled: :disabled) + al_usr.text } %>
-    <%# end %>
-</p>
+		<p>
+  			<strong>アレルギー品目</strong>
+    		<% @user.allergens.each do |allergen| %>
+  	 		<%= allergen.name %> &nbsp
+  	 		<% end %>
+		</p>
+	</div>
+	<div class="profile-image">
+		<%= image_tag(@user.image_path_url) rescue nil %>
+	</div>
+	<%= link_to '登録情報変更', 'edit', class: "btn btn-color text-light" %>
+</div>
 
-<%= link_to '登録情報変更', 'edit' %>
 
-<p>
-<h2>投稿レシピ</h2> 
-<ul>
-  <% @receipes.each do |receipe| %>
-    <li>
-      <%= link_to receipe.title, receipe %>
-      <%= image_tag(receipe.image_path_url, :width => 400, :height => 300) rescue nil %>
-    </li>
-  <% end %>
-</ul>
-<%= will_paginate @receipes, :param_name => 'myreceipe_page', :renderer => BootstrapPagination::Rails %>
-</p>
-<p>
-<h2>お気に入り</h2> 
-<ul>
-<% @bookmarks.each do |b_rsp| %>
-   <li>
-   	   <%= link_to b_rsp.receipe.title, b_rsp.receipe %>
-      <%= image_tag(b_rsp.receipe.image_path_url, :width => 400, :height => 300) rescue nil %>
-   	</li>
-<% end %>
-</ul>
-<%= will_paginate @bookmarks,  :param_name => 'bookmark_page', :renderer => BootstrapPagination::Rails %>
-</p>
+<div class="jumbotron">
+	<h3>投稿レシピ</h3>
+<div class="card-deck mb-5">
 
-<%= link_to 'レシピを投稿する', new_receipes_path(user_id: session[:usr]) %>
-<%#= link_to 'レシピを投稿する', controller: :receipes, action: :new %>
-<%= link_to 'ログアウト', logout_path, method: :post %>
+  	<% @receipes.each do |receipe| %>
+    	
+    	<%= link_to(receipe_path(receipe), class: 'card col-6') do %>
+     		<div class="card-body">
+     			<%= image_tag(receipe.image_path_url, :width => 240, :height => 180, :class => "card-img mb-2") rescue nil %>
+     			<h5 class="card-text"><%= receipe.title %></h5>
+     			<div id='average-star-rating'></div>
+      			<p class="card-text h6">カテゴリ: <%= category_name(receipe.receipe_category_id) %></p>
+				<p class="card-text h6">アレルギー物質:
+				<% allergen_array = [] %>
+     			<% receipe.ingredients.each do |ingredient| %>
+   					<% ingredient.allergens.each do |allergen| %>
+           			<%#= allergen.name %>
+           			<% allergen_array.push(allergen.name) %>
+   					<% end %>
+   				<% end %>
+   						
+   				<% allergen_array.uniq.each do |allergen| %>
+   					<%= allergen %>&nbsp
+   				<% end %>
+   				
+  			   </p>
+     			<p class="card-text h6">概要: <%= receipe.introduction %></p>
+       	</div>
+    	<% end %>
+    <% end %>
+    
+</div>
+<br><br>
+ <%= will_paginate @receipes, :param_name => 'myreceipe_page', :renderer => WillPaginate::ActionView::BootstrapLinkRenderer %>  
+</div>
+
+<div class="jumbotron">
+	<h3>お気に入り</h3>
+<div class="card-deck mb-5">
+	<% @bookmarks.each do |b_rsp| %>
+		 <%= link_to(receipe_path(b_rsp.receipe.id), class: 'card col-6') do %>
+     		<div class="card-body">
+     			<%= image_tag(b_rsp.receipe.image_path_url, :width => 240, :height => 180, :class => "card-img mb-2") rescue nil %>
+     			<h5 class="card-text"><%= b_rsp.receipe.title %></h5>
+      			<p class="card-text h6">カテゴリ: <%= category_name(b_rsp.receipe.receipe_category_id) %></p>
+      			<p class="card-text h6">アレルギー物質:
+      			<% allergen_array = [] %>
+     			<% b_rsp.receipe.ingredients.each do |ingredient| %>
+   					<% ingredient.allergens.each do |allergen| %>
+           			<%#= allergen.name %>
+           			<% allergen_array.push(allergen.name) %>
+   					<% end %>
+   			    <% end %>
+   			   		
+   				<% allergen_array.uniq.each do |allergen| %>
+   					<%= allergen %>&nbsp
+   				<% end %>
+  			    </p>
+  			    <p class="card-text h6">概要: <%= b_rsp.receipe.introduction %></p>
+   			</div>
+   		<% end %>
+	<% end %>
+</div>
+<br><br>
+<%= will_paginate @bookmarks,  :param_name => 'bookmark_page', :renderer => WillPaginate::ActionView::BootstrapLinkRenderer %>
+</div>

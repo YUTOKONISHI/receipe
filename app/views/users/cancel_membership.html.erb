@@ -1,7 +1,9 @@
-<h1>退会手続き</h1>
+
+<div class="jumbotron mt-5">
+<h3>退会手続き</h3>
 
 <p>
-  <strong>Email:</strong>
+  <strong>メールアドレス:</strong>
   <%= @user.email %>
 </p>
 
@@ -10,19 +12,17 @@
   <%= @user.first_name %>  <%= @user.last_name %>
 </p>
 
-<%= image_tag(@user.image_path_url) rescue nil %>
-
 <p>
   <strong>アレルギー品目</strong>
-	 <%= collection_check_boxes(:user, :allergen_ids, Allergen.all, :id, :name) do |al_usr| %>
-     <%= al_usr.label { al_usr.check_box(disabled: :disabled) + al_usr.text } %>
-    <% end %>
+  <% @user.allergens.each do |allergen| %>
+  	 		<%= allergen.name %> &nbsp
+  <% end %>
+	 
 </p>
 
-<%= link_to '退会する', :user, method: :delete, data: { confirm: 'Are you sure?' } %>
-<%#= form_tag action: :withdrawal do  |f| %>
-  <%#= hidden_field_tag :registration, 'false' %>
-  <%#= submit_tag '退会する' %>
-<%# end %>
+<div class="profile-image">
+<%= image_tag(@user.image_path_url) rescue nil %>
+</div>
 
-<%= link_to 'マイページ', :controller => "users", :action => "mypage" %>
+<%= link_to '退会する', user_path(session[:usr]), method: :delete , data: { confirm: '本当に退会しますか？' }, class: "btn btn-color text-light" %>
+</div>

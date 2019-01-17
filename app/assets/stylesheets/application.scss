@@ -13,6 +13,81 @@
  *= require_tree .
  *= require_self
  */
- @import "bootstrap-sprockets";
+
  @import "bootstrap";
  @import "font-awesome";
+ 
+ body {
+  background-color: #FFFFF0;   
+ }
+ 
+ .container-fluid{
+   padding-left: 0px;
+   padding-right: 0px;
+
+ }
+
+.navbar-dark .navbar-nav .nav-link:hover{
+  background-color: transparent;
+}
+
+.card:hover{
+  background-color: white;
+  text-decoration: none;
+}
+
+.card-img{
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  float:left;
+  padding-right: 15px;
+}
+ 
+.bg-color{
+   background-color: #5A320A;
+   text-decoration: none;
+}
+
+.jumbotron{
+  background-color: #FFFFF0;
+}
+
+.jumbotron-white{
+   background-color:white;
+}
+
+.jumbotron-receipe{
+  padding-top: 0;
+}
+
+.jumbotron-img{
+  background-image: url("party.jpg");
+  background-size: cover;
+  //width: auto;
+  //height: 800px;
+    
+}
+
+.jumbotron-width{
+   width: 400px; 
+}
+
+.btn-color{
+  background-color: #5A320A;
+  color: #FFF;
+}
+
+.btn:hover{
+  background-color: #5A320A;
+  color: #FFF;
+}
+
+
+
+.receipe_image{
+  float: left;
+  margin-right: 10px;
+  object-fit: cover;
+}
+
