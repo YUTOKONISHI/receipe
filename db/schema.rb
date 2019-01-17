@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_02_030839) do
+ActiveRecord::Schema.define(version: 2019_01_17_160839) do
 
   create_table "allergens", force: :cascade do |t|
     t.string "name"
@@ -19,8 +19,8 @@ ActiveRecord::Schema.define(version: 2018_12_02_030839) do
   end
 
   create_table "allergens_ingredients", force: :cascade do |t|
-    t.integer "ingredient_id"
     t.integer "allergen_id"
+    t.integer "ingredient_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["allergen_id"], name: "index_allergens_ingredients_on_allergen_id"
