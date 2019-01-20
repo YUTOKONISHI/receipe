@@ -1,11 +1,8 @@
 
-<%= params[:param1] rescue nil %>
-<%= params[:param2] rescue nil %>
-<%= params[:param3] rescue nil %>
 
 <div class="jumbotron">
-	<h2>検索結果</h2>
 	<% if params[:q].present? %>
+	<h2>検索結果</h2>
 		<% if params[:q][:title_cont].present? %>
 			レシピ名: <%= params[:q][:title_cont] %><br>
 			<% params[:param1] = params[:q][:title_cont] %>

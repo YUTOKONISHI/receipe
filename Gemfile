@@ -8,6 +8,7 @@ gem 'nested_form_fields'
 gem 'paranoia' #論理削除
 gem 'bcrypt'
 gem 'carrierwave'
+gem 'fog'
 gem 'mini_magick'
 #gem 'bootstrap-sass'
 gem 'bootstrap'

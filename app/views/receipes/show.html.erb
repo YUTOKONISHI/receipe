@@ -24,7 +24,15 @@
 	<p class="h4">レシピ紹介</p>
 	 <%= @receipe.introduction %>
 	
-	<p class="h4 mt-2"><div id='average-star-rating'>レシピの評価:</div></p>
+	<p class="h4 mt-2">
+		<div id='average-star-rating'>
+			レシピの評価:
+			<% if average_rate.nil? %>
+			評価なし
+			<% end %>
+		</div>
+	</p>
+
 	
 	<p class="h5 mt-5">レシピカテゴリ: 	<%= @receipe_category.name %> </p>
     <p class="h4 mt-5">材料</p>

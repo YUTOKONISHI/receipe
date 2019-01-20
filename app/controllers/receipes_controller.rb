@@ -13,8 +13,9 @@ class ReceipesController < ApplicationController
   # GET /receipes/1
   # GET /receipes/1.json
   def show
-    @receipe_category = ReceipeCategory.find_by(params[:receipe_category_id])
+    
     @receipe = Receipe.find(params[:receipe_id])
+    @receipe_category = ReceipeCategory.find_by(id:  @receipe.receipe_category_id)
     @ingredients = @receipe.ingredients
     @cooking_steps = @receipe.cooking_steps
   end
@@ -29,7 +30,7 @@ class ReceipesController < ApplicationController
   end
  
   def edit
-    
+
   end
 
   # POST /receipes

@@ -59,7 +59,8 @@
      <td><%= q.text_field :name, class: 'form-control' %></td>
      <td><%= q.text_field :quantity, class: 'form-control' %></td>
      <td><%= q.collection_check_boxes(:allergen_ids, Allergen.all, :id, :name) do |al_rsp| %>
-      <%= al_rsp.label { al_rsp.check_box + al_rsp.text } %><% end %></td>
+      <%= al_rsp.label { al_rsp.check_box + al_rsp.text } %>
+      <% end %></td>
      <td>
      	<a href="#ingredient" data-toggle="modal", class="btn btn-color text-light">代替食品を設定する</a>
      	
@@ -78,8 +79,7 @@
      							<th>分量</th>
      							<th>アレルギー成分</th>
      						</tr>
-     						
-     						<%= q.fields_for :replaced_ingredient do |r| %>
+     						<%= q.fields_for :replaced_ingredients do |r| %>
      						<%= r.hidden_field :id %>
      						<td><%= r.text_field :name, class: 'form-control' %></td>
      						<td><%= r.text_field :quantity, class: 'form-control' %></td>
