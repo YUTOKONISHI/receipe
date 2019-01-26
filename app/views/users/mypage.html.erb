@@ -1,6 +1,7 @@
 
 <div class="jumbotron mt-5">
-	<div class="profile">
+	<div class="col-6">
+	<div class="col-6">
 		<h3>プロフィール</h3> 
 
 		<p>
@@ -20,10 +21,11 @@
   	 		<% end %>
 		</p>
 	</div>
-	<div class="profile-image">
+	<div class="profile-image col-6">
 		<%= image_tag(@user.image_path_url) rescue nil %>
 	</div>
 	<%= link_to '登録情報変更', 'edit', class: "btn btn-color text-light" %>
+	</div>
 </div>
 
 
@@ -36,7 +38,7 @@
     	<%= link_to(receipe_path(receipe), class: 'card col-6') do %>
      		<div class="card-body">
      			<%= image_tag(receipe.image_path_url, :width => 240, :height => 180, :class => "card-img mb-2") rescue nil %>
-     			<h5 class="card-text"><%= receipe.title %></h5>
+     			<h4 class="card-text"><%= receipe.title %></h4>
      			<div id='average-star-rating'></div>
       			<p class="card-text h6">カテゴリ: <%= category_name(receipe.receipe_category_id) %></p>
 				<p class="card-text h6">アレルギー物質:
@@ -53,7 +55,7 @@
    				<% end %>
    				
   			   </p>
-     			<p class="card-text h6">概要: <%= receipe.introduction %></p>
+     			<p class="card-text h6">レシピの紹介: <%= receipe.introduction %></p>
        	</div>
     	<% end %>
     <% end %>
@@ -70,7 +72,7 @@
 		 <%= link_to(receipe_path(b_rsp.receipe.id), class: 'card col-6') do %>
      		<div class="card-body">
      			<%= image_tag(b_rsp.receipe.image_path_url, :width => 240, :height => 180, :class => "card-img mb-2") rescue nil %>
-     			<h5 class="card-text"><%= b_rsp.receipe.title %></h5>
+     			<h4 class="card-text"><%= b_rsp.receipe.title %></h5>
       			<p class="card-text h6">カテゴリ: <%= category_name(b_rsp.receipe.receipe_category_id) %></p>
       			<p class="card-text h6">アレルギー物質:
       			<% allergen_array = [] %>

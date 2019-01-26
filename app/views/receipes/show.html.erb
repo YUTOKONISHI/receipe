@@ -1,5 +1,5 @@
 <div class="jumbotron jumbotron-receipe">
-	<p id="notice"><%= notice %></p>
+	<p id="notice" class="h5"><%= notice %></p>
 	<% if session[:usr] == @receipe.user_id %>
 		<%= link_to '編集する', edit_receipe_path(@receipe), class: "btn btn-color text-light",  data: {"turbolinks" => false} %>
 	<% end %>

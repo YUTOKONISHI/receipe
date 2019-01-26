@@ -1,7 +1,7 @@
 <div class="jumbotron text-black">
 	<div class="jumbotron col-md-6">
 
-<p id="notice"><%= notice %></p>
+<p id="notice" class="h5"><%= notice %></p>
 
 <p>
   <strong>メールアドレス:</strong>
@@ -23,6 +23,6 @@
   	 	<%= allergen.name %> &nbsp
   	<% end %>
 </p>
-
-</div>
+ 	<%= link_to "トップページへ", root_path, method: :get, class: "btn btn-color text-light" %>
+	</div>
 </div>
