@@ -13,6 +13,7 @@ gem 'fog-aws'
 gem 'mini_magick'
 #gem 'bootstrap-sass'
 gem 'bootstrap'
+
 gem 'will_paginate'
 gem 'will_paginate-bootstrap4'
 gem "font-awesome-rails"

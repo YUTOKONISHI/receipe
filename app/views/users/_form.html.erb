@@ -50,7 +50,15 @@
 
 	 <div class="field">
     	<%= f.label :プロフィール画像 %>
-    	<%= f.file_field :image_path, id: :user_image_path %>
+    	<div class="input-group">
+   			<label class="input-group-btn">
+    			<span class="btn btn-color">
+    			ファイル選択
+    			<%= f.file_field :image_path, id: :user_image_path, class: 'form-control', style: "display:none;"  %>
+    			</span>
+    		</label>
+    		<input type="text" class="form-control" readonly="">
+    	</div>	
 	 </div>
   
 	 <div class="field">
@@ -73,3 +81,11 @@
 	<% end %>
   </div>
 </div>
+<script>
+$(document).on('change', ':file', function() {
+    var input = $(this),
+    numFiles = input.get(0).files ? input.get(0).files.length : 1,
+    label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+    input.parent().parent().next(':text').val(label);
+});
+</script>

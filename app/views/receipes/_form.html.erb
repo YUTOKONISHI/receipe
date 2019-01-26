@@ -36,8 +36,17 @@
   			</div>
 
   			<div class="field">
-    			<%= f.label :完成品画像 %>
-    			<%= f.file_field :image_path, id: :receipe_image_path %>
+    			<%= f.label :完成品画像%>
+    			<%#= f.label :image, class: "btn btn-color text-light" %>
+    			<div class="input-group">
+   				 <label class="input-group-btn">
+    			<span class="btn btn-color">
+    			ファイル選択
+    			<%= f.file_field :image_path, id: :receipe_image_path, style: "display:none;" %>
+    			</span>
+    			</label>
+    			<input type="text" class="form-control" readonly="">
+    			</div>
   			</div>
   		</div>
   		<div class="col-4">
@@ -123,7 +132,17 @@
      <%= q.hidden_field :id %>
      <%= q.hidden_field :number, class: 'number-num', :value =>"1" %>
      <td><%= q.text_field :description, class: 'form-control' %></td>
-     <td><%= q.file_field :image_path, id: :cooking_step_image_path, class: 'form-control' %></td>
+     <td>
+     	<div class="input-group">
+   			<label class="input-group-btn">
+    			<span class="btn btn-color">
+    			ファイル選択
+    			<%= q.file_field :image_path, id: :cooking_step_image_path, class: 'form-control', style: "display:none;"  %>
+    			</span>
+    		</label>
+    		<input type="text" class="form-control" readonly="">
+    	</div>	
+     </td>
      <td><%= q.remove_nested_fields_link '削除する', role: 'button', class: 'btn btn-color text-light' %></td>
     <% end %>
     </tbody>
@@ -136,3 +155,13 @@
   </div>
 <% end %>
 </div>
+
+
+<script>
+$(document).on('change', ':file', function() {
+    var input = $(this),
+    numFiles = input.get(0).files ? input.get(0).files.length : 1,
+    label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+    input.parent().parent().next(':text').val(label);
+});
+</script>
