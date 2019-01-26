@@ -25,12 +25,16 @@
 <% @results.each do |result| %>
 
 		<div class="card-group">	
-			<%= link_to(receipe_path(result), class: 'card') do %>
+			<%= link_to(receipe_path(result), class: 'card', data: {"turbolinks" => false}) do %>
      				<div class="card-body">
      					<%= image_tag(result.image_path_url, :class => "card-img")  rescue nil %>
      					<h4 class="card-text"><%= result.title %></h4>
-     					<div id='average-star-rating'></div>
-     					
+     					<h5><div id='average-star-rating'>
+						レシピの評価:
+						<% if average_rate_query(result.id).nil? %>
+							評価なし
+						<% end %>
+						</div></h5>		
       					<p class="card-text h5">カテゴリ: <%= category_name(result.receipe_category_id) %></p>
 						<p class="card-text h5">アレルギー物質:
 					   <% allergen_array = [] %>
@@ -46,13 +50,16 @@
   			           </p>
   						<p class="card-text h5">レシピの紹介: <%= result.introduction %></p>
 						<script>
-						$(function(i){
+				
+						$(document).on('ready page:restore', function(i){
 							$('#average-star-rating').attr('id', i + 1).raty({
 							path: '/assets/',
 							readOnly: true,
 							number: 5,
 							score : <%= average_rate_for_search_result(result.id) %>
 						});});
+						
+						
 						</script>
 					</div>
 				<% end %>
@@ -65,4 +72,4 @@
 <%= will_paginate @results, :renderer =>  WillPaginate::ActionView::BootstrapLinkRenderer rescue nil %>
 </div>
 </div>
-	
+

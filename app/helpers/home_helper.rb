@@ -1,4 +1,10 @@
 module HomeHelper
+  def average_rate_query(result_id)
+     score = ReceipeEvaluation.where(receipe_id: result_id).average(:rating)
+     
+     return score
+  end
+  
   def category_name(category_id)
      category = ReceipeCategory.find_by(id: category_id)
      

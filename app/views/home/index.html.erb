@@ -4,18 +4,18 @@
 		<h3>レシピ検索</h3>
 		<%= search_form_for @search, url: root_path do |f| %>
 		<%#= search_form_for @search, url: root_path, html: { method: :post, class: 'ransack-form' } do |f| %>
-			<p class="h6">レシピ名から検索</p>
+			<p class="h6">レシピ名</p>
 		
 			<div class="form-group">
 				<%= f.text_field :title_cont, :style => "width:80%", class: "form-control"  %>
 			</div>	
 	
-			<p class="h6">カテゴリから検索</p>
+			<p class="h6">カテゴリ</p>
 				<%= f.collection_radio_buttons :receipe_category_id_eq , @receipe_category, :id, :name , {:checked => true} %>
 			<% if session[:usr]%>
 	
 			<% else %>
-			<p class="h6">検索オプション(除外項目にチェック)</p>
+			<p class="h6">除外アレルギー</p>
     			<%= f.collection_check_boxes :ingredients_allergens_id_not_eq_all, Allergen.all, :id, :name, {:checked => true}%>
     		<% end %>
     		<%#= hidden_field_tag 'page', '1', {class: 'ransack-page'} %>

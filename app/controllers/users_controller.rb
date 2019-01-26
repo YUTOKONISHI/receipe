@@ -46,7 +46,7 @@ class UsersController < ApplicationController
   # GET /users/1/edit
   def edit
     #@user.allergens_users.build 
-    @user.image_path.cache! # 一時的アップロード(@userインスタンスには一時ディレクトリのパスが入る)
+    #@user.image_path.cache! # 一時的アップロード(@userインスタンスには一時ディレクトリのパスが入る)
   end
 
   def confirm_new

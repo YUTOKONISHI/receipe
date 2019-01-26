@@ -8,7 +8,7 @@ gem 'nested_form_fields'
 gem 'paranoia' #論理削除
 gem 'bcrypt'
 gem 'carrierwave'
-gem 'fog'
+#gem 'fog'
 gem 'fog-aws'
 gem 'mini_magick'
 #gem 'bootstrap-sass'
@@ -20,8 +20,8 @@ gem 'ransack'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.1'
 # Use sqlite3 as the database for Active Record
-gem 'pg'
-#gem 'sqlite3'
+#gem 'pg'
+gem 'sqlite3'
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
@@ -36,6 +36,8 @@ gem 'coffee-rails', '~> 4.2'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
+gem 'jquery-turbolinks'
+
 gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'

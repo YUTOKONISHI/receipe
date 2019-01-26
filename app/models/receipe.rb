@@ -5,7 +5,7 @@ class Receipe < ApplicationRecord
   
   mount_uploader :image_path, ReceipeImagesUploader 
   
-  has_many :receipe_evaluations
+  has_many :receipe_evaluations, dependent: :destroy
   accepts_nested_attributes_for :receipe_evaluations 
   
   has_many :bookmarks, foreign_key: :receipe_id, dependent: :destroy
@@ -13,14 +13,14 @@ class Receipe < ApplicationRecord
   
   has_many :users, through: :bookmarks
   
-  has_many :ingredients
+  has_many :ingredients, dependent: :destroy
   accepts_nested_attributes_for :ingredients, allow_destroy: true #この行を追加
   
  
   #has_and_belongs_to_many :replaced_ingredients
   #accepts_nested_attributes_for :replaced_ingredients
   
-  has_many :cooking_steps
+  has_many :cooking_steps, dependent: :destroy
   accepts_nested_attributes_for :cooking_steps, allow_destroy: true #この行を追加
   
   validates :title, presence: true
