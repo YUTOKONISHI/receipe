@@ -129,12 +129,7 @@
      						<div id='star-rating'></div>
      					</div>
      					<div class="modal-footer">
-     					<%# if !ReceipeEvaluation.exists?(user_id: session[:usr],receipe_id:@receipe.id) %>
      						<%= re_e.submit '決定', id: :ok  %>
-     					<%# else %>
-     					<%#= link_to "決定", update_rating_receipe_path(@receipe_evaluations), method: :put, method: :put, params: {user_id: session[:usr], receipe_id: params[:receipe_id], rating: :rating } %>
-     					<%# end %>
-     					<%#= link_to '決定',  controller: :receipe_evaluations, action: :create , method: :post %>
      					</div>
      				</div>
      			</div>
@@ -145,6 +140,7 @@
 	</div>
 
 	<script>
+	//レシピを実施
 	$('#star-rating').raty({
 	path: '/assets/',
 	click: function(score, e) {
@@ -153,6 +149,7 @@
 	});
 	</script>
 	<script>
+	//レシピのレーティング評価の平均値を取得
 	$(document).on('ready page:restore page:load', function(){
 	$('#average-star-rating').raty({
 	path: '/assets/',

@@ -45,12 +45,13 @@
 				<% allergen_array = [] %>
      			<% receipe.ingredients.each do |ingredient| %>
    					<% ingredient.allergens.each do |allergen| %>
-           			<%#= allergen.name %>
+           			    <%#= 一旦重複しているものも含めて配列に突っ込む %>
            			<% allergen_array.push(allergen.name) %>
    					<% end %>
    				<% end %>
    						
    				<% allergen_array.uniq.each do |allergen| %>
+   				    <%# 重複項目を除外して表示する %>
    					<%= allergen %>&nbsp
    				<% end %>
    				
@@ -78,12 +79,13 @@
       			<% allergen_array = [] %>
      			<% b_rsp.receipe.ingredients.each do |ingredient| %>
    					<% ingredient.allergens.each do |allergen| %>
-           			<%#= allergen.name %>
+           			    <%#= 一旦重複しているものも含めて配列に突っ込む %>
            			<% allergen_array.push(allergen.name) %>
    					<% end %>
    			    <% end %>
    			   		
    				<% allergen_array.uniq.each do |allergen| %>
+   				    <%# 重複項目を除外して表示する %>
    					<%= allergen %>&nbsp
    				<% end %>
   			    </p>

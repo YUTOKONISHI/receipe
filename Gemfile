@@ -4,25 +4,22 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.5.0'
 gem 'jquery-rails'
 gem 'sprockets'
-gem 'nested_form_fields'
+gem 'nested_form_fields' #動的フォームの追加
 gem 'paranoia' #論理削除
-gem 'bcrypt'
-gem 'carrierwave'
-#gem 'fog'
-gem 'fog-aws'
-gem 'mini_magick'
-#gem 'bootstrap-sass'
-gem 'bootstrap'
-
-gem 'will_paginate'
-gem 'will_paginate-bootstrap4'
-gem "font-awesome-rails"
-gem 'ransack'
+gem 'bcrypt' #パスワードの暗号化
+gem 'carrierwave' #画像のアップロード
+gem 'fog-aws' #Amazon Web Searviceへのアップロード
+gem 'mini_magick' #画像のリサイズ
+gem 'bootstrap' #bootstrap4の適用
+gem 'will_paginate' #ページネーション
+gem 'will_paginate-bootstrap4' #ページネーションのbootstrap4デザイン適用
+gem "font-awesome-rails" #フォントの使用
+gem 'ransack' #検索用
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.1'
 # Use sqlite3 as the database for Active Record
-gem 'pg'
-#gem 'sqlite3'
+#gem 'pg' #herokuでの稼働用 dB
+gem 'sqlite3' #ローカルでの動作検証用 dB
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets

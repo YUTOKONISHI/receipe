@@ -1,42 +1,42 @@
 <div class="jumbotron text-black">
 	<div class="jumbotron col-md-6">
-<%= form_for @user do |f| %>
-	<div class="field">
-		メールアドレス: <%= @user.email %>
-		<%= f.hidden_field :email %>
-	</div>
+	<%= form_for @user do |f| %>
+		<div class="field">
+			メールアドレス: <%= @user.email %>
+			<%= f.hidden_field :email %>
+		</div>
 	
-	<div class="field">
-		姓: <%= @user.last_name %>
-		<%= f.hidden_field :last_name %>
-	</div>	
+		<div class="field">
+			姓: <%= @user.last_name %>
+			<%= f.hidden_field :last_name %>
+		</div>	
 	
-	<div class="field">
-		名: <%= @user.first_name %>
-		<%= f.hidden_field :first_name %>
-	</div>
+		<div class="field">
+			名: <%= @user.first_name %>
+			<%= f.hidden_field :first_name %>
+		</div>
 
-	<div class="field">
-		パスワード: *****************
-		<%= f.hidden_field :password %>
-	</div>
+		<div class="field">
+			パスワード: *****************
+			<%= f.hidden_field :password %>
+		</div>
 	
-	<div class="field">
-       アレルギー品目: 
+		<div class="field">
+       	アレルギー品目: 
        
-      <%= f.collection_check_boxes(:allergen_ids, Allergen.all, :id, :name) do |al_usr| %>
-      <%= al_usr.label { al_usr.check_box(:class => "allergen", disabled: :true) + al_usr.text } %> 
-      <% end %>
-      <% if @path.is('users#confirm_new') %>
-      <% @user.allergens_users.each do |allergen_id| %>
-      <%= f.hidden_field :allergen_ids, multiple: true, value: allergen_id.id %>
-      <% end %>
-      <% end %>
-      <% if @path.is('users#confirm_edit') %>
-      <% @user.allergens_users.each do |allergen_user| %>
-      <%= f.hidden_field :allergen_user_ids, multiple: true, value: allergen_user.id %>
-      <% end %>
-      <% end %>
+      	<%= f.collection_check_boxes(:allergen_ids, Allergen.all, :id, :name) do |al_usr| %>
+      		<%= al_usr.label { al_usr.check_box(:class => "allergen", disabled: :true) + al_usr.text } %> 
+      	<% end %>
+      	<% if @path.is('users#confirm_new') %>
+      		<% @user.allergens_users.each do |allergen_id| %>
+      			<%= f.hidden_field :allergen_ids, multiple: true, value: allergen_id.id %>
+      		<% end %>
+      	<% end %>
+      	<% if @path.is('users#confirm_edit') %>
+      		<% @user.allergens_users.each do |allergen_user| %>
+      			<%= f.hidden_field :allergen_user_ids, multiple: true, value: allergen_user.id %>
+      		<% end %>
+      	<% end %>
 
     </div>
     
@@ -59,11 +59,10 @@
     	<%= f.submit '登録' , id: :btn, class: "btn btn-color text-light" %>
     </div>
 	
-	
 <% end %>
 
 <script type="text/javascript">
- 
+ //登録ボタンを押すと、チェックボックスのdisable属性を解除し、DBに登録する
 $("#btn").click(function() {
    ///disabled属性の状態を取得する
     var result = $('.allergen').prop('disabled');

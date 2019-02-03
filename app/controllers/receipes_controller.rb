@@ -30,7 +30,11 @@ class ReceipesController < ApplicationController
   end
  
   def edit
-
+    @receipe = Receipe.find(params[:receipe_id])
+    @ingredient_list = @receipe.ingredients
+    #@ingredient = @ingredient_list
+    #@ingredient.build_replaced_ingredient if  ReplacedIngredient.exists?(ingredient_id: params[:receipe_id]).nil?
+    @flag = true
   end
 
   # POST /receipes
@@ -83,8 +87,8 @@ class ReceipesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def receipe_params
       params.require(:receipe).permit(:user_id, :receipe_category_id, :title, :introduction, :image_path,  
-        ingredients_attributes: [:id, :receipe_id, :name, :quantity, {:allergen_ids =>[]},:_destroy], 
-        replaced_ingredient_attributes: [:id, :ingredient_id, :name, :quantity, {:allergen_ids =>[]}, :_destroy],
+        ingredients_attributes: [:id, :receipe_id, :name, :quantity, {:allergen_ids =>[]},:_destroy, 
+        replaced_ingredient_attributes: [:id, :ingredient_id, :name, :quantity, {:allergen_ids =>[]}, :_destroy]],
         cooking_steps_attributes: [:id, :receipe_id, :number, :description, :image_path, :_destroy],
         receipe_evaluations_attributes: [:id, :receipe_id, :user_id, :rating, :_destroy]
         )

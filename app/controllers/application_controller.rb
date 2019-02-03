@@ -1,8 +1,5 @@
 class ApplicationController < ActionController::Base
   def check_logined
-        #logger.debug(session[:usr])
-        #logger.debug(params[:user_id].to_i)
-        #logger.debug(session[:usr] == params[:user_id].to_i)
       if session[:usr] then
         begin
           @user = User.find(session[:usr])

@@ -1,19 +1,23 @@
 class HomeController < ApplicationController
       
   def index
-   #@allergens = Allergen.all
    @receipe_category = ReceipeCategory.all
        
     if session[:usr]
-       @allergens = Allergen.where(allergens: { id: AllergensUser.where(user_id: session[:usr]).pluck(:allergen_id) })
+      @allergens = Allergen.where(allergens: { id: AllergensUser.where(user_id: session[:usr]).pluck(:allergen_id) })
       @ingredient = Ingredient.includes(:allergens).where(allergens: { id: AllergensUser.where(user_id: session[:usr]).pluck(:allergen_id) })
-      #代替食品についても上と類似の記載をする
+       #代替食品についても上と類似の記載をする
       @a = Receipe.where.not(id: @ingredient.pluck(:receipe_id))
+      @b = Receipe.where(id: @ingredient.pluck(:receipe_id))
+     
+      @replaced_ingredient = ReplacedIngredient.includes(:allergens).where(allergens: { id: AllergensUser.where(user_id: session[:usr]).pluck(:allergen_id) })
+      @ingredient2         = Ingredient.where(id: @replaced_ingredient.pluck(:ingredient_id))
+      @c = @b.where.not(id: @ingredient2.pluck(:receipe_id))
+      
+      #@d = @a.or(@c)
       #@aの結果に代替食品の結果を結合(union)
-      #@a = Receipe.distinct.joins(:ingredients).where.not(ingredients: { id: @ingredient.pluck(:id)})#.ransack(params[:q])
       @search = @a.ransack(params[:q])
-      #@search = Receipe.includes(ingredients: :allergens).where.not(allergens: { id: AllergensUser.where(user_id: session[:usr]).pluck(:allergen_id) }).ransack(params[:q])
-      #Blog.includes(entries: :comments).where(comments: { id: [*1..3] })
+
       
     else
       if params[:q].nil?

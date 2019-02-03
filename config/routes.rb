@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   get  'users/cancel_membership', to: 'users#cancel_membership', as: :cancel_membership
   post 'users/withdrawal' 
   resources :cooking_steps, param: :cooking_step_id
-  resources :receipes, param: :receipe_id, except: [:new] do
+  resources :receipes, param: :receipe_id, except: [:new, :index] do
     
     collection do
       get ':user_id/new', to: 'receipes#new', as: :new
@@ -23,16 +23,16 @@ Rails.application.routes.draw do
      
   end
   
-  resources :receipe_evaluations, param: :receipe_evaluation_id, except: [:create, :update]
-  resources :bookmarks, param: :bookmark_id, except: [:create, :destroy] #except: [:new, :edit, :show, :update, :create, :destroy]
-  resources :allergens_ingredients, param: :allergens_ingredients_id
-  resources :ingredients, param: :ingredient_id
-  resources :allergens_replaced_ingredients, param: :allergens_replaced_ingredients_id
-  resources :replaced_ingredients, param: :replaced_ingredient_id
-  resources :receipe_categories, param: :receipe_category_id
-  resources :allergens_users, param: :allergens_users_id
-  resources :allergens, param: :allergen_id
-  resources :users, param: :user_id do
+  resources :receipe_evaluations, param: :receipe_evaluation_id, except: [:index, :create, :update]
+  resources :bookmarks, param: :bookmark_id, except: [:index, :create, :destroy] #except: [:new, :edit, :show, :update, :create, :destroy]
+  resources :allergens_ingredients, param: :allergens_ingredients_id, except: [:index]
+  resources :ingredients, param: :ingredient_id, except: [:index]
+  resources :allergens_replaced_ingredients, param: :allergens_replaced_ingredients_id, except: [:index]
+  resources :replaced_ingredients, param: :replaced_ingredient_id#, except: [:index]
+  resources :receipe_categories, param: :receipe_category_id, except: [:index]
+  resources :allergens_users, param: :allergens_users_id, except: [:index]
+  resources :allergens, param: :allergen_id, except: [:index]
+  resources :users, param: :user_id, except: [:index] do
     
     collection do
       post 'confirm_new'
@@ -46,6 +46,4 @@ Rails.application.routes.draw do
   post 'login/auth'
   post 'login/index', to: 'login#logout', as: :logout
  
- 
-
 end

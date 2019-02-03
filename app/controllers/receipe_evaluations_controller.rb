@@ -29,24 +29,12 @@ class ReceipeEvaluationsController < ApplicationController
     receipe = Receipe.find(params[:receipe_id])
     user_rating = params[:rating]
     
-    
-    
     if ReceipeEvaluation.create(user_id: session_user, receipe_id: receipe.id, rating: user_rating)
       redirect_to receipe
     else
     
     end
-    #@receipe_evaluation = ReceipeEvaluation.new(receipe_evaluation_params)
 
-    #respond_to do |format|
-    #  if @receipe_evaluation.save
-    #    format.html { redirect_to @receipe_evaluation, notice: 'Receipe evaluation was successfully created.' }
-    #    format.json { render :show, status: :created, location: @receipe_evaluation }
-    #  else
-    #    format.html { render :new }
-    #    format.json { render json: @receipe_evaluation.errors, status: :unprocessable_entity }
-    #  end
-    #end
   end
 
   # PATCH/PUT /receipe_evaluations/1
@@ -62,15 +50,7 @@ class ReceipeEvaluationsController < ApplicationController
     else
     
     end
-    #respond_to do |format|
-    #  if @receipe_evaluation.update(receipe_evaluation_params)
-    #    format.html { redirect_to @receipe_evaluation, notice: 'Receipe evaluation was successfully updated.' }
-    #    format.json { render :show, status: :ok, location: @receipe_evaluation }
-    #  else
-    #    format.html { render :edit }
-    #    format.json { render json: @receipe_evaluation.errors, status: :unprocessable_entity }
-    #  end
-    #end
+
   end
 
   # DELETE /receipe_evaluations/1

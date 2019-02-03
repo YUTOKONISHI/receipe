@@ -21,5 +21,14 @@ module ReceipesHelper
     end
   end  
   
+  def re_ingredient_new_or_edit(bool)
+       @receipe = Receipe.find(params[:receipe_id])
+    if bool == true  
+       @ingredient = @receipe.ingredients.build
+       @ingredient.build_replaced_ingredient
+    else
+       @ingredient = @receipe.ingredients
+    end
+  end
   
 end

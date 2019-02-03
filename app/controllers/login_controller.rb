@@ -6,7 +6,6 @@ class LoginController < ApplicationController
         reset_session
         session[:usr] = usr.id
         if params[:referer].empty?
-            #redirect_to params[:referer]
             redirect_to "/users/mypage"  #idを渡すときには注意 route.rbの記載とurlを合わせる
         else
             redirect_to params[:referer]

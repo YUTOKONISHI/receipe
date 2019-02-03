@@ -1,7 +1,6 @@
 
 <div class="jumbotron text-left mt-5">
 <%= form_with(model: receipe, url: receipe_create_or_update, method: receipe_post_or_put, local: true) do |f| %>
-<%#= form_with(model: receipe,  local: true) do |f| %>
   <% if receipe.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(receipe.errors.count, "error") %> prohibited this receipe from being saved:</h2>
@@ -37,7 +36,6 @@
 
   			<div class="field">
     			<%= f.label :完成品画像%>
-    			<%#= f.label :image, class: "btn btn-color text-light" %>
     			<div class="input-group">
    				 <label class="input-group-btn">
     			<span class="btn btn-color">
@@ -68,6 +66,23 @@
        <th></th>
        <th></th>
      </tr>
+     <% count = 0 %>
+     <% ing_count = 0 %>
+     <% ing_count_all = -1 %>
+     <% ingredient_array = [] %>
+     <% if Receipe.exists?(user_id: session[:usr], id: params[:receipe_id]) %>
+     	<% @ingredient_list.each do |ingredient| %>
+     		<% ing_count_all = ing_count_all + 1 %>
+     		<% if !ReplacedIngredient.exists?(ingredient_id: ingredient.id) %>
+     			<%#= ingredient.id %>
+     			<% ingredient_array.push(true) %>
+     		<% else %>
+     			<% ingredient_array.push(false) %>
+     		<% end %>
+     	<% end %>
+     <% end %>
+     <%= ing_count_all %>
+    <%= ing_count %>
     <%= f.nested_fields_for :ingredients, wrapper_tag: :tr do |q| %>
      <td><%= q.text_field :name, class: 'form-control' %></td>
      <td><%= q.text_field :quantity, class: 'form-control' %></td>
@@ -75,9 +90,10 @@
       <%= al_rsp.label { al_rsp.check_box + al_rsp.text } %>
       <% end %></td>
      <td>
-     	<a href="#ingredient" data-toggle="modal", class="btn btn-color text-light">代替食品を設定する</a>
+     	<% count = count + 1 %>
+     	<a href="#ingredient<%=count%>" data-toggle="modal", class="btn btn-color text-light">代替食品を設定する</a>
      	
-     	<div class="modal fade" id="ingredient" tabindex="-1">
+     	<div class="modal fade" id="ingredient<%=count%>" tabindex="-1">
      		<div class="modal-dialog modal-dialog-centered">
      			<div class="modal-content">
      				<div class="modal-header">
@@ -92,15 +108,40 @@
      							<th>分量</th>
      							<th>アレルギー成分</th>
      						</tr>
-     						<%= q.fields_for :replaced_ingredients do |r| %>
-     						<%= r.hidden_field :id %>
-     						<td><%= r.text_field :name, class: 'form-control' %></td>
-     						<td><%= r.text_field :quantity, class: 'form-control' %></td>
-     						<td><%= r.collection_check_boxes(:allergen_ids, Allergen.all, :id, :name) do |re_al_rsp| %>
-     							<%= re_al_rsp.label { re_al_rsp.check_box + re_al_rsp.text } %>
-                            <% end %>
-                        </td>
-                         <% end %>
+     						
+     						<% if Receipe.exists?(user_id: session[:usr], id: params[:receipe_id]) %>
+     					    	<% if (ing_count < ing_count_all) %>
+     									<%= q.fields_for :replaced_ingredient, re_ingredient_new_or_edit(ingredient_array[ing_count]) do |r| %>
+     										<%= r.hidden_field :id %>
+     										<td><%= r.text_field :name, class: 'form-control' %></td>
+     										<td><%= r.text_field :quantity, class: 'form-control' %></td>
+     										<td><%= r.collection_check_boxes(:allergen_ids, Allergen.all, :id, :name) do |re_al_rsp| %>
+     											<%= re_al_rsp.label { re_al_rsp.check_box + re_al_rsp.text } %>
+                            			<% end %>
+                        					</td>
+                         			<% end %>
+                         	<% else %>
+     									<%= q.fields_for :replaced_ingredient,  re_ingredient_new_or_edit(true)  do |r| %>
+     										<%= r.hidden_field :id %>
+     										<td><%= r.text_field :name, class: 'form-control' %></td>
+     										<td><%= r.text_field :quantity, class: 'form-control' %></td>
+     										<td><%= r.collection_check_boxes(:allergen_ids, Allergen.all, :id, :name) do |re_al_rsp| %>
+     											<%= re_al_rsp.label { re_al_rsp.check_box + re_al_rsp.text } %>
+                            			<% end %>
+                        					</td>
+                         			<% end %>
+                         	<% end %>
+     						<% else %>
+     							<%= q.fields_for :replaced_ingredient,  @ingredient.build_replaced_ingredient do |r| %>
+     								<%= r.hidden_field :id %>
+     								<td><%= r.text_field :name, class: 'form-control' %></td>
+     								<td><%= r.text_field :quantity, class: 'form-control' %></td>
+     								<td><%= r.collection_check_boxes(:allergen_ids, Allergen.all, :id, :name) do |re_al_rsp| %>
+     									<%= re_al_rsp.label { re_al_rsp.check_box + re_al_rsp.text } %>
+                            		<% end %>
+                        			</td>
+                         	<% end %>
+                        <% end %>
      					</tbody>
      					</table>
      				</div>
@@ -108,13 +149,15 @@
      			   </div>
      		   </div>
      	    </div>
-     	</div>
+     	</div>	
      </td>
      <td><%= q.remove_nested_fields_link '削除する', role: 'button', class: 'btn btn-color text-light' %></td>
+     <% ing_count = ing_count + 1 %>
     <% end %>
     </tbody>
     </table>
     <%= f.add_nested_fields_link :ingredients, '材料を追加する', role: 'button', class: 'btn btn-color text-light' %>
+     <% @flag = true %>
   </div>
 
   <div class="field">
@@ -158,6 +201,7 @@
 
 
 <script>
+//画像選択ボタンの色変更
 $(document).on('change', ':file', function() {
     var input = $(this),
     numFiles = input.get(0).files ? input.get(0).files.length : 1,
