@@ -69,7 +69,7 @@
 
   							<td>
   								<% ingredient.allergens.each do |allergen| %>
-  			 						<%= allergen.name %>
+  			 						<%= allergen.name %> &nbsp;
   								<% end %>
        					</td>
        					<% if ingredient.replaced_ingredient.present? %>
@@ -81,7 +81,7 @@
   							</td>
   							<td>
   								<% ingredient.replaced_ingredient.allergens.each do |allergen|  %>
-  			 						<%= allergen.name %>
+  			 						<%= allergen.name %> &nbsp;
   								<% end %>
        					</td>
        					<% else %>

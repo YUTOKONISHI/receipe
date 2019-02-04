@@ -27,7 +27,7 @@ module ReceipesHelper
        @ingredient = @receipe.ingredients.build
        @ingredient.build_replaced_ingredient
     else
-       @ingredient = @receipe.ingredients
+       
     end
   end
   

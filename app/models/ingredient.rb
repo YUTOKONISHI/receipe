@@ -1,6 +1,6 @@
 class Ingredient < ApplicationRecord
   belongs_to :receipe, inverse_of: :ingredients, optional: true
-  has_one :replaced_ingredient
+  has_one :replaced_ingredient, dependent: :destroy
   accepts_nested_attributes_for :replaced_ingredient, allow_destroy: true
    
   validates :receipe, presence: true

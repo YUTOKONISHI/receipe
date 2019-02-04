@@ -68,7 +68,7 @@
      </tr>
      <% count = 0 %>
      <% ing_count = 0 %>
-     <% ing_count_all = -1 %>
+     <% ing_count_all = 0 %>
      <% ingredient_array = [] %>
      <% if Receipe.exists?(user_id: session[:usr], id: params[:receipe_id]) %>
      	<% @ingredient_list.each do |ingredient| %>
@@ -81,8 +81,7 @@
      		<% end %>
      	<% end %>
      <% end %>
-     <%= ing_count_all %>
-    <%= ing_count %>
+     
     <%= f.nested_fields_for :ingredients, wrapper_tag: :tr do |q| %>
      <td><%= q.text_field :name, class: 'form-control' %></td>
      <td><%= q.text_field :quantity, class: 'form-control' %></td>
@@ -157,7 +156,6 @@
     </tbody>
     </table>
     <%= f.add_nested_fields_link :ingredients, '材料を追加する', role: 'button', class: 'btn btn-color text-light' %>
-     <% @flag = true %>
   </div>
 
   <div class="field">

@@ -32,9 +32,7 @@ class ReceipesController < ApplicationController
   def edit
     @receipe = Receipe.find(params[:receipe_id])
     @ingredient_list = @receipe.ingredients
-    #@ingredient = @ingredient_list
-    #@ingredient.build_replaced_ingredient if  ReplacedIngredient.exists?(ingredient_id: params[:receipe_id]).nil?
-    @flag = true
+    
   end
 
   # POST /receipes
