@@ -49,17 +49,18 @@
    						<% end %>
   			           </p>
   						<p class="card-text h5">レシピの紹介: <%= result.introduction %></p>
+  						
 						<script>
-				
+
 						$(document).on('ready page:restore', function(i){
+							   
 							$('#average-star-rating').attr('id', i + 1).raty({
 							path: '/assets/',
 							readOnly: true,
 							number: 5,
 							score : <%= average_rate_for_search_result(result.id) %>
 						});});
-						
-						
+               
 						</script>
 					</div>
 				<% end %>

@@ -18,8 +18,8 @@ gem 'ransack' #検索用
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.1'
 # Use sqlite3 as the database for Active Record
-#gem 'pg' #herokuでの稼働用 dB
-gem 'sqlite3' #ローカルでの動作検証用 dB
+gem 'pg' #herokuでの稼働用 dB
+#gem 'sqlite3' #ローカルでの動作検証用 dB
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
